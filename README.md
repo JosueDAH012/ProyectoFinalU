@@ -1,4 +1,4 @@
-# ProyectoFinalU
+# Final University Project
 This is my final university project based on the MERN stack
 
 # Getting Started with Create React App
