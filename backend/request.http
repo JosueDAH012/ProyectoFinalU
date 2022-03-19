@@ -1,0 +1,36 @@
+###
+POST http://localhost:3001/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Valeria",
+    "age": "21",
+    "email": "valeria@gmail.com"
+}
+ 
+###
+GET http://localhost:3001/api/users HTTP/1.1
+
+
+###
+GET http://localhost:3001/api/users/62187b2f687770b8fde44d4b HTTP/1.1
+
+###
+PUt http://localhost:3001/api/users/62187fe073acc208b2acf78c HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Darla",
+    "age": "21",
+    "email": "darla@gmail.com"
+}
+
+###
+DELETE  http://localhost:3001/api/users/62187bf6687770b8fde44d4d HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Darla",
+    "age": "21",
+    "email": "darla@gmail.com"
+}
