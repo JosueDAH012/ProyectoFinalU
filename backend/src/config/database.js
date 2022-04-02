@@ -2,7 +2,6 @@
 require("dotenv").config();
 const mongoose = require('mongoose');
 
-
 module.exports = class DBConnection {
     constructor() {
         this.MONGODB_HOST = process.env.MONGODB_URI

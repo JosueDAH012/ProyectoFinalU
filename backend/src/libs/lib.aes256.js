@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const aes256 = require('aes256'); // Libreria para encriptar datos.
 
-const constants = require('../config/constants');
+
 const DBPassword = process.env.CONTRASENIA_ENCRIPTACION_DB;
 
 ExportModule.Encriptar = PlainText => aes256.encrypt(DBPassword, PlainText);
