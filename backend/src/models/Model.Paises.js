@@ -7,7 +7,7 @@ const paises = new Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nombre: {

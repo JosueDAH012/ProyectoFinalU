@@ -7,7 +7,7 @@ const usuarioSchema = new mongoose.Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nombre: {
@@ -25,11 +25,11 @@ const usuarioSchema = new mongoose.Schema(
       trim: true,
     },
     NumeroTelefono: {
-      type: Number,
+      type: String,
       required: true,
     },
     Celular: {
-      type: Number,
+      type: String,
       required: true,
     },
     Username: {

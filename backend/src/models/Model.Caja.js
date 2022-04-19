@@ -7,7 +7,7 @@ const cajaSchema = new Schema(
       required: true
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true
     },
     Fecha: {
@@ -20,15 +20,15 @@ const cajaSchema = new Schema(
       trim: true,
     },
     EntradaDinero: {
-      type: Number,
+      type: String,
       required: true,
     },
     AperturaCaja: {
-      type: Date,
+      type: String,
       required: true,
     },
     CierreCaja: {
-      type: Date,
+      type: String,
       required: true,
     },
     Restaurante: {

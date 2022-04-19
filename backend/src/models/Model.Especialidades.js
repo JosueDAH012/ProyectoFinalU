@@ -7,7 +7,7 @@ const especialidadesSchema = new Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nombre: {
@@ -21,7 +21,7 @@ const especialidadesSchema = new Schema(
       trim: true,
     },
     Precio: {
-      type: Number,
+      type: String,
       required: true,
     },
     Detalle: {

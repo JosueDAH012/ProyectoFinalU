@@ -7,7 +7,7 @@ const productoslimpiezaSchema = new Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nombre: {
@@ -24,7 +24,7 @@ const productoslimpiezaSchema = new Schema(
       required: true
     },
     Cantidad: {
-      type: Number,
+      type: String,
       required: true
     },
     Descripcion: {
@@ -33,11 +33,11 @@ const productoslimpiezaSchema = new Schema(
       trim: true
     },
     CantidadMedida: {
-      type: Number,
+      type: String,
       required: true
     },
     UnidadMedida: {
-      type: Number,
+      type: String,
       required: true
     }
   },

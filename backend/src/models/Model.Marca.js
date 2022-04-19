@@ -7,7 +7,7 @@ const marcaSchema = new Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nombre: {
@@ -40,7 +40,7 @@ const marcaSchema = new Schema(
       trim: true
     },
     NumeroTelefono: {
-      type: Number,
+      type: String,
       required: true,
       unique: true
     },

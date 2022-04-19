@@ -7,7 +7,7 @@ const buffetSchema = new Schema(
       required: true
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true
     },
     Nombre: {
@@ -16,7 +16,7 @@ const buffetSchema = new Schema(
       trim: true,
     },
     Precio: {
-      type: Number,
+      type: String,
       required: true,
     },
     Tipo: {
@@ -25,7 +25,7 @@ const buffetSchema = new Schema(
       trim: true,
     },
     UnidadDeMedida: {
-      type: Number,
+      type: String,
       required: true,
     },
     Foto: {

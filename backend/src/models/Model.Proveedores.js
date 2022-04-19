@@ -7,7 +7,7 @@ const proveedoresSchema = new Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nombre: {
@@ -31,23 +31,23 @@ const proveedoresSchema = new Schema(
       trim: true
     },
     TelefonoOficina: {
-      type: Number,
+      type: String,
       required: true
     },
     Fax: {
-      type: Number,
+      type: String,
       required: true
     },
     Celular: {
-      type: Number,
+      type: String,
       required: true
     },
     Cedula: {
-      type: Number,
+      type: String,
       required: true
     },
     FechaIngreso: {
-      type: Date,
+      type: String,
       required: true
     },
     Direccion: {
@@ -66,7 +66,7 @@ const proveedoresSchema = new Schema(
       trim: true
     },
     TelefonoContacto: {
-      type: Number,
+      type: String,
       required: true
     },
     DireccionContacto: {

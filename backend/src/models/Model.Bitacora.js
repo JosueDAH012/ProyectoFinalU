@@ -12,7 +12,7 @@ const bitacoraSchema = new Schema(
       required: true
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true
     },
     Fecha: {

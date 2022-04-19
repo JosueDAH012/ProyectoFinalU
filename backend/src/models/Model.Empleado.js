@@ -7,11 +7,11 @@ const empleadoSchema = new Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     Cedula: {
-      type: Number,
+      type: String,
       required: true,
       trim: true,
     },
@@ -31,11 +31,11 @@ const empleadoSchema = new Schema(
       trim: true,
     },
     NumeroTelefono: {
-      type: Number,
+      type: String,
       required: true,
     },
     Celular: {
-      type: Number,
+      type: String,
       required: true,
     },
     Puesto: {

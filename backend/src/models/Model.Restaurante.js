@@ -7,7 +7,7 @@ const restauranteSchema = new Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nombre: {
@@ -25,7 +25,7 @@ const restauranteSchema = new Schema(
       trim: true
     },
     Telefono: {
-      type: Number,
+      type: String,
       required: true
     },
     Activo: {

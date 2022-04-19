@@ -7,7 +7,7 @@ const mesaSchema = new Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nombre: {
@@ -15,11 +15,11 @@ const mesaSchema = new Schema(
       required: true,
     },
     Numero: {
-      type: Number,
+      type: String,
       required: true
     },
     CantidadSillas: {
-      type: Number,
+      type: String,
       required: true
     },
     Restaurante: {

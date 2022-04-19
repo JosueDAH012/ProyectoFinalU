@@ -7,7 +7,7 @@ const productostecnologiaSchema = new Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nombre: {
@@ -24,7 +24,7 @@ const productostecnologiaSchema = new Schema(
       required: true
     },
     Cantidad: {
-      type: Number,
+      type: String,
       required: true
     },
     Descripcion: {

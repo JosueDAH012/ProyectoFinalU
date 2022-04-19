@@ -7,7 +7,7 @@ const productosdesechablesSchema = new Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nombre: {
@@ -21,7 +21,7 @@ const productosdesechablesSchema = new Schema(
       trim: true
     },
     Cantidad: {
-      type: Number,
+      type: String,
       required: true
     },
     Restaurante: {

@@ -7,7 +7,7 @@ const bebidalicorSchema = new Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nombre: {
@@ -29,7 +29,7 @@ const bebidalicorSchema = new Schema(
       required: true,
     },
     Cantidad: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nacionalidad: {
@@ -38,11 +38,11 @@ const bebidalicorSchema = new Schema(
       trim: true,
     },
     PrecioUnitario: {
-      type: Number,
+      type: String,
       required: true,
     },
     PrecioBotella: {
-      type: Number,
+      type: String,
       required: true,
     },
     Marca: {

@@ -7,7 +7,7 @@ const clienteSchema = new Schema(
       required: true
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true
     },
     NombreCompleto: {
@@ -16,7 +16,7 @@ const clienteSchema = new Schema(
       trim: true,
     },
     MontoPagado: {
-      type: Number,
+      type: String,
       required: true,
     },
     Detalle: {
@@ -25,11 +25,11 @@ const clienteSchema = new Schema(
       trim: true,
     },
     FechaVenta: {
-      type: Date,
+      type: String,
       required: true,
     },
     Reservacion: {
-      type: Boolean,
+      type: String,
       required: true,
     },
     Restaurante: {

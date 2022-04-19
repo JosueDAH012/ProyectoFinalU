@@ -7,7 +7,7 @@ const facturacionSchema = new Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     TipoFecha: { 
@@ -20,7 +20,7 @@ const facturacionSchema = new Schema(
       trim: true
     },
     Monto: {
-      type: Number,
+      type: String,
       required: true
     },
     Restaurante: {

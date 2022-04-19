@@ -7,7 +7,7 @@ const bebidavinoSchema = new Schema(
       required: true,
     },
     Numeracion: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nombre: {
@@ -29,7 +29,7 @@ const bebidavinoSchema = new Schema(
       required: true,
     },
     Cantidad: {
-      type: Number,
+      type: String,
       required: true,
     },
     Nacionalidad: {
@@ -38,15 +38,15 @@ const bebidavinoSchema = new Schema(
       trim: true,
     },
     PrecioUnitario: {
-      type: Number,
+      type: String,
       required: true,
     },
     PrecioBotella: {
-      type: Number,
+      type: String,
       required: true,
     },
     YearCosecha: {
-      type: Date,
+      type: String,
       required: true,
     },
     Marca: {
