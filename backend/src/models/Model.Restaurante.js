@@ -1,39 +1,44 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
+require("dotenv").config();
+const AutoIncrementFactory = require('mongoose-sequence');
+
+const connection = mongoose.createConnection(process.env.MONGODB_URI);
+
+const AutoIncrement = AutoIncrementFactory(connection);
 
 const restauranteSchema = new Schema(
   {
-    Consecutivo: {
+    _id: Number,
+    consecutivo: {
       type: String,
       required: true,
+      default: 'RES'
     },
-    Numeracion: {
+    nombre: {
       type: String,
-      required: true,
-    },
-    Nombre: {
-      type: String,
-      required: true,
+      required: [true, "Por favor ingrese el nombre!"],
       trim: true
     },
-    Especialidad: {
+    especialidad: {
       type: String,
-      required: true
+      required: [true, "Por favor ingrese la especialidad!"]
     },
-    Direccion: {
+    direccion: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingrese la direccion!"],
       trim: true
     },
-    Telefono: {
+    telefono: {
       type: String,
-      required: true
+      required: [true, "Por favor ingrese el numero de telefono!"]
     },
-    Activo: {
+    activo: {
       type: String,
       required: true
     }
   },
   { timestamps: true, versionKey: false }
 );
+restauranteSchema.plugin(AutoIncrement);
 
 module.exports = model("restaurante", restauranteSchema);

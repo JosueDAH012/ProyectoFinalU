@@ -12,25 +12,25 @@ const bebidaheladaSchema = new Schema(
     },
     Nombre: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un nombre!"],
       trim: true,
     },
     Ingredientes: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar los ingredientes!"],
       trim: true,
     },
     Precio: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un precio!"]
     },
     Restaurante: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un restaurante!"]
     },
     Descripcion: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una descripcion!"],
       trim: true,
     },
     Foto: {

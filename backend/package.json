@@ -14,11 +14,12 @@
   "dependencies": {
     "aes256": "^1.1.0",
     "axios": "^0.26.1",
-    "bcryptjs": "^2.4.3",
+    "bcrypt": "^5.0.1",
     "cloudinary": "^1.29.0",
     "concurrently": "^7.0.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "debug": "^4.3.4",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-async-handler": "^1.2.0",
@@ -27,8 +28,13 @@
     "googleapis": "^100.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.7",
+    "mongoose-sequence": "^5.3.1",
+    "morgan": "^1.10.0",
     "node-fetch": "^3.2.3",
-    "nodemailer": "^6.7.3"
+    "nodemailer": "^6.7.3",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

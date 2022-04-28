@@ -4,7 +4,7 @@ const bitacoraSchema = new Schema(
   {
     UsuarioID: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar el usuario id!"],
       unique: true,
     },
     Consecutivo: {
@@ -18,15 +18,16 @@ const bitacoraSchema = new Schema(
     Fecha: {
       type: Date,
       required: true,
+      default: new Date()
     },
     Titulo: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un titulo!"],
       trim: true,
     },
     Descripcion: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una descripcion!"],
       trim: true,
     }
   },

@@ -1,30 +1,36 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
+require("dotenv").config();
+const AutoIncrementFactory = require('mongoose-sequence');
+
+const connection = mongoose.createConnection(process.env.MONGODB_URI);
+
+const AutoIncrement = AutoIncrementFactory(connection);
 
 const puestosSchema = new Schema(
   {
-    Consecutivo: {
+    _id: Number,
+    consecutivo: {
       type: String,
       required: true,
+      default: 'PU'
     },
-    Numeracion: {
+    nombre: {
       type: String,
-      required: true,
-    },
-    Nombre: {
-      type: String,
-      required: true,
+      required: [true, "Por favor ingresar un nombre!"],
       trim: true
     },
-    PosicionRestaurante: {
+    posicionrestaurante: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una posicion en el restuarante!"]
     },
-    Rol: {
+    rol: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un puesto!"]
     }
   },
   { timestamps: true, versionKey: false }
 );
+puestosSchema.plugin(AutoIncrement);
+
 
 module.exports = model("puestos", puestosSchema);

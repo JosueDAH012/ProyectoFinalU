@@ -1,85 +1,92 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
+require("dotenv").config();
+const AutoIncrementFactory = require('mongoose-sequence');
+
+const connection = mongoose.createConnection(process.env.MONGODB_URI);
+
+const AutoIncrement = AutoIncrementFactory(connection);
 
 const proveedoresSchema = new Schema(
   {
-    Consecutivo: {
+    _id: Number,
+    consecutivo: {
       type: String,
       required: true,
+      default: 'PRO'
     },
-    Numeracion: {
+
+    nombre: {
       type: String,
-      required: true,
-    },
-    Nombre: {
-      type: String,
-      required: true,
+      required: [true, "Por favor ingresar un nombre!"],
       trim: true
     },
-    PrimerApellido: {
+    primerapellido: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un primer apellido!"],
       trim: true
     },
-    SegundoApellido: {
+    segundoapellido: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un segundo apellido!"],
       trim: true
     },
-    CorreoElectronico: {
+    correoelectronico: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un correo electronico!"],
       trim: true
     },
-    TelefonoOficina: {
+    telefonooficina: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar un telefono de oficina!"]
     },
-    Fax: {
+    fax: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar un telefono fax!"]
     },
-    Celular: {
+    celular: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar un telefono celular!"]
     },
-    Cedula: {
+    cedula: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar una cedula!"]
     },
-    FechaIngreso: {
-      type: String,
-      required: true
-    },
-    Direccion: {
-      type: String,
+    fechaingreso: {
+      type: Date,
       required: true,
+      default: new Date()
+    },
+    direccion: {
+      type: String,
+      required: [true, "Por favor ingresar una direccion!"],
       trim: true
     },
-    ProdcutosManejados: {
+    productosmanejados: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar los productos manejados!"],
       trim: true
     },
-    NombreContacto: {
+    nombrecontacto: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un nombre de contacto!"],
       trim: true
     },
-    TelefonoContacto: {
+    telefonocontacto: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar un telefono de contacto!"],
     },
-    DireccionContacto: {
+    direccioncontacto: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una contraseña!"],
       trim: true
     },
-    Foto: {
+    foto: {
       type: String,
       required: true
     }
   },
   { timestamps: true, versionKey: false }
 );
+proveedoresSchema.plugin(AutoIncrement);
 
 module.exports = model("proveedores", proveedoresSchema);

@@ -13,27 +13,28 @@ const cajaSchema = new Schema(
     Fecha: {
       type: Date,
       required: true,
+      default: new Date()
     },
     Descripcion: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una descripcion!"],
       trim: true,
     },
     EntradaDinero: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar la entrada de dinero!"]
     },
     AperturaCaja: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar la apertura de caja!"]
     },
     CierreCaja: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar el cierre de caja!"]
     },
     Restaurante: {
         type: String,
-        required: true
+        required: [true, "Por favor ingresar un restaurante!"]
     }
   },
   { timestamps: true, versionKey: false }

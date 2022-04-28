@@ -1,47 +1,52 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
+require("dotenv").config();
+const AutoIncrementFactory = require('mongoose-sequence');
+
+const connection = mongoose.createConnection(process.env.MONGODB_URI);
+
+const AutoIncrement = AutoIncrementFactory(connection);
 
 const productoslimpiezaSchema = new Schema(
   {
-    Consecutivo: {
+    _id: Number,
+    consecutivo: {
       type: String,
       required: true,
+      default: 'LH'
     },
-    Numeracion: {
+    nombre: {
       type: String,
-      required: true,
-    },
-    Nombre: {
-      type: String,
-      required: true,
+      required: [true, "Por favor ingresar un nombre!"],
       trim: true
     },
-    Restaurante: {
+    restaurante: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar un restaurante!"]
     },
-    Marca: {
+    marca: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar una marca!"]
     },
-    Cantidad: {
+    cantidad: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar una cantidad!"]
     },
-    Descripcion: {
+    descripcion: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una descripcion!"],
       trim: true
     },
-    CantidadMedida: {
+    cantidadmedida: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar una cantidad de medida!"]
     },
-    UnidadMedida: {
+    unidadmedida: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar un restaurante!"]
     }
   },
   { timestamps: true, versionKey: false }
 );
+productoslimpiezaSchema.plugin(AutoIncrement);
 
 module.exports = model("productoslimpieza", productoslimpiezaSchema);

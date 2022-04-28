@@ -11,21 +11,22 @@ const facturacionSchema = new Schema(
       required: true,
     },
     TipoFecha: { 
-      type: String,
-      required: true
+      type: Date,
+      required: true,
+      default: new Date()
     },
     Descripcion: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una descripcion!"],
       trim: true
     },
     Monto: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar un monto!"]
     },
     Restaurante: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar un restaurante!"]
     }
   },
   { timestamps: true, versionKey: false }

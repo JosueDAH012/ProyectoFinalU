@@ -12,44 +12,44 @@ const empleadoSchema = new Schema(
     },
     Cedula: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar su cedula!"],
       trim: true,
     },
     Nombre: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar su nombre!"],
       trim: true,
     },
     PrimerApellido: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar su primer apellido!"],
       trim: true,
     },
     SegundoApellido: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar su segundo apellido!"],
       trim: true,
     },
     NumeroTelefono: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un numero telefonico!"]
     },
     Celular: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un numero celular!"]
     },
     Puesto: {
         type: String,
-        required: true
+        required: [true, "Por favor ingresar un puesto!"]
     },
     Nacionalidad: {
         type: String,
-        required: true,
+        required: [true, "Por favor ingresar una nacionalidad!"],
         trim: true
     },
     Restaurante: {
         type: String,
-        required: true
+        required: [true, "Por favor ingresar un restaurante!"]
     },
     Foto: {
         type: String,

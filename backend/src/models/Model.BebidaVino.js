@@ -12,16 +12,16 @@ const bebidavinoSchema = new Schema(
     },
     Nombre: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un nombre!"],
       trim: true,
     },
     Restaurante: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un restaurante!"],
     },
     Descripcion: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una descripcion!"],
       trim: true,
     },
     Foto: {
@@ -30,28 +30,28 @@ const bebidavinoSchema = new Schema(
     },
     Cantidad: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar la cantidad!"],
     },
     Nacionalidad: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar la nacionalidad!"],
       trim: true,
     },
     PrecioUnitario: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar el precio unitario!"],
     },
     PrecioBotella: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar el precio de la botella!"],
     },
     YearCosecha: {
-      type: String,
+      type: Date,
       required: true,
     },
     Marca: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar la marca!"],
       trim: true,
     },
   },

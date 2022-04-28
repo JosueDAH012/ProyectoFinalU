@@ -12,21 +12,21 @@ const buffetSchema = new Schema(
     },
     Nombre: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar el nombre!"],
       trim: true,
     },
     Precio: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar el precio!"],
     },
     Tipo: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar el tipo de buffet!"],
       trim: true,
     },
     UnidadDeMedida: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar la unidad de medida!"],
     },
     Foto: {
       type: String,

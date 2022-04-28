@@ -1,8 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const express_session = require('express-session');
+const cookieParser = require('cookie-parser')
+const fileUpload = require('express-fileupload')
 const cors = require('cors');
-require('dotenv').config();
+
 
 const app = express()
 
@@ -13,6 +16,10 @@ app.set('port', process.env.PUERTO) // Puerto donde corre el back-end.
 app.use(cors()); // Se aceptan headers desde cualquier origen.
 app.use(express.static(path.join(__dirname, 'public'))) // Carpeta de archivos estaticos.
 app.use(express.json()) // Server entiende JSON.
+app.use(cookieParser())
+app.use(fileUpload({
+    useTempFiles: true
+}))
 
 // Ajustes de la sesion de Express.
 const express_session_settings = {
@@ -57,6 +64,9 @@ app.use('/api/proveedores', require('./routes/Route.Proveedores'));
 app.use('/api/puestos', require('./routes/Route.Puestos'));
 app.use('/api/restaurante', require('./routes/Route.Restaurante'));
 app.use('/api/unidadmedida', require('./routes/Route.UnidadesMedida'));
-app.use('/api/usuario', require('./routes/Route.Usuario'));
+//app.use('/api/usuario', require('./routes/Route.Usuario'));
+app.use('/user', require('./routes/userRouter'))
+app.use('/api', require('./routes/upload'))
+
 
 module.exports = app;

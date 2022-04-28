@@ -1,54 +1,60 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
+require("dotenv").config();
+
+const AutoIncrementFactory = require("mongoose-sequence");
+const connection = mongoose.createConnection(process.env.MONGODB_URI);
+const AutoIncrement = AutoIncrementFactory(connection);
 
 const productoscomestibleSchema = new Schema(
   {
-    Consecutivo: {
+    _id: Number,
+    consecutivo: {
       type: String,
       required: true,
+      default: "COM",
     },
-    Numeracion: {
+    nombre: {
       type: String,
-      required: true,
-    },
-    Nombre: {
-      type: String,
-      required: true,
+      required: [true, "Por favor ingresar un nombre!"],
       trim: true,
     },
-    Cantidad: {
+    cantidad: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una cantidad!"],
     },
-    TipoComestible: {
+    tipocomestible: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un tipo de comestible!"],
     },
-    Restaurante: {
+    restaurante: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un restaurante!"],
     },
-    Marcas: {
+    marcas: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una marca!"],
       trim: true,
     },
-    ClaseComestible: {
+    clasecomestible: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una clase comestible!"],
       trim: true,
     },
-    LineaComestible: {
+    lineacomestible: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una linea comestible!"],
       trim: true,
     },
-    UnidadMedida: {
+    unidadmedida: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una unidad de medida!"],
     },
   },
   { timestamps: true, versionKey: false }
 );
+productoscomestibleSchema.plugin(AutoIncrement);
+
+module.exports = model("productoscomestible", productoscomestibleSchema);
 
 /*
  * Posibles datos de la variable Tipo para
@@ -84,6 +90,3 @@ const productoscomestibleSchema = new Schema(
  *  Congelados
  *  Refrigerados
  */
-
-
-module.exports = model("productoscomestible", productoscomestibleSchema);

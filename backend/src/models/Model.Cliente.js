@@ -12,30 +12,31 @@ const clienteSchema = new Schema(
     },
     NombreCompleto: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar su nombre!"],
       trim: true,
     },
     MontoPagado: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar su monto pagado!"]
     },
     Detalle: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un detalle!"],
       trim: true,
     },
     FechaVenta: {
-      type: String,
+      type: Date,
       required: true,
+      default: new Date()
     },
     Reservacion: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una reservacion!"]
     },
     Restaurante: {
       type: String,
-      required: true,
-    },
+      required: [true, "Por favor ingresar un restaurante!"]
+    }
   },
   { timestamps: true, versionKey: false }
 );

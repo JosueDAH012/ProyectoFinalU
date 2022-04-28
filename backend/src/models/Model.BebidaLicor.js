@@ -12,16 +12,16 @@ const bebidalicorSchema = new Schema(
     },
     Nombre: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un nombre!"],
       trim: true,
     },
     Restaurante: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un restaurante!"],
     },
     Descripcion: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una descripcion!"],
       trim: true,
     },
     Foto: {
@@ -30,24 +30,24 @@ const bebidalicorSchema = new Schema(
     },
     Cantidad: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar la cantidad!"]
     },
     Nacionalidad: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar la nacionalidad!"],
       trim: true,
     },
     PrecioUnitario: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar el precio unitario!"]
     },
     PrecioBotella: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar el precio de la botella!"]
     },
     Marca: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una marca!"],
       trim: true,
     },
   },

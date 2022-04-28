@@ -1,25 +1,33 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
+require("dotenv").config();
+const AutoIncrementFactory = require('mongoose-sequence');
 
-const paises = new Schema(
+const connection = mongoose.createConnection(process.env.MONGODB_URI);
+
+const AutoIncrement = AutoIncrementFactory(connection);
+
+const paisesSchema = new Schema(
   {
-    Consecutivo: {
+    consecutivo: {
       type: String,
       required: true,
+      default: 'P'
     },
-    Numeracion: {
-      type: String,
+    numeracion: {
+      type: Number,
       required: true,
     },
-    Nombre: {
+    nombre: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un nombre!"]
     },
-    FotoBandera: {
+    fotobandera: {
       type: String,
       required: true,
     }
   },
   { timestamps: true, versionKey: false }
 );
+paisesSchema.plugin(AutoIncrement, {inc_field: 'numeracion'});
 
-module.exports = model("paises", paises);
+module.exports = model("paises", paisesSchema);

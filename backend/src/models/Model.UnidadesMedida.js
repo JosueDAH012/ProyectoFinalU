@@ -1,37 +1,45 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
+require("dotenv").config();
+const AutoIncrementFactory = require('mongoose-sequence');
+
+const connection = mongoose.createConnection(process.env.MONGODB_URI);
+
+const AutoIncrement = AutoIncrementFactory(connection);
 
 const unidadesmedidaSchema = new Schema(
   {
-    Consecutivo: {
+    consecutivo: {
       type: String,
+      required: true,
+      default: 'UM'
+    },
+    numeracion: {
+      type: Number,
       required: true,
     },
-    Numeracion: {
+    unidadmedida: {
       type: String,
-      required: true,
-    },
-    UnidadMedida: {
-      type: String,
-      required: true,
+      required: [true, "Por favor ingresar la unidad de medida!"],
       trim: true
     },
-    Escala: {
+    escala: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingrese la escala!"],
       trim: true
     },
-    Detalle: {
+    detalle: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingrese un detalle!"],
       trim: true
     },
-    Simbologia: {
+    simbologia: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingrese una simbologia!"],
       trim: true
     }
   },
   { timestamps: true, versionKey: false }
 );
+unidadesmedidaSchema.plugin(AutoIncrement, {inc_field: 'numeracion'});
 
 module.exports = model("unidadesmedida", unidadesmedidaSchema);

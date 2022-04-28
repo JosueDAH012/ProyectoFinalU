@@ -12,19 +12,19 @@ const mesaSchema = new Schema(
     },
     Nombre: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un nombre!"]
     },
     Numero: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar el numero de mesa!"]
     },
     CantidadSillas: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar la cantidad de sillas!"]
     },
     Restaurante: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar un restaurante!"]
     }
   },
   { timestamps: true, versionKey: false }

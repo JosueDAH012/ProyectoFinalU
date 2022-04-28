@@ -6,6 +6,8 @@ module.exports = class DBConnection {
     constructor() {
         this.MONGODB_HOST = process.env.MONGODB_URI
         this.config = {
+            useCreateIndex: true,
+            useFindAndModify: false,
             useNewUrlParser: true,
             useUnifiedTopology: true
         };

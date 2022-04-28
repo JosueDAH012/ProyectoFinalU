@@ -1,39 +1,48 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
+require("dotenv").config();
+const AutoIncrementFactory = require('mongoose-sequence');
 
-const productosdesechablesSchema = new Schema(
+const connection = mongoose.createConnection(process.env.MONGODB_URI);
+
+const AutoIncrement = AutoIncrementFactory(connection);
+
+const pdSchema = new Schema(
   {
-    Consecutivo: {
+    _id: Number,
+    consecutivo: {
       type: String,
+      required: true,
+      default: 'DE'
+    },
+    numeracion: {
+      type: Number,
       required: true,
     },
-    Numeracion: {
+    nombre: {
       type: String,
-      required: true,
-    },
-    Nombre: {
-      type: String,
-      required: true,
+      required: [true, "Por favor ingresar un nombre!"],
       trim: true
     },
-    Descripcion: {
+    descripcion: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una descripcion!"],
       trim: true
     },
-    Cantidad: {
+    cantidad: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar una cantidad!"]
     },
-    Restaurante: {
+    restaurante: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar un restaurante!"]
     },
-    Marca: {
+    marca: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una marca!"]
     }
   },
   { timestamps: true, versionKey: false }
 );
+pdSchema.plugin(AutoIncrement);
 
-module.exports = model("productosdesechables", productosdesechablesSchema);
+module.exports = model("productosdesechables", pdSchema);

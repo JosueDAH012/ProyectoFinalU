@@ -3,7 +3,8 @@ const { Schema, model } = require("mongoose");
 const especialidadesSchema = new Schema(
   {
     Consecutivo: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "consecutivo",
       required: true,
     },
     Numeracion: {
@@ -12,12 +13,12 @@ const especialidadesSchema = new Schema(
     },
     Nombre: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingrese el nombre!"],
       trim: true,
     },
     Ingredientes: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingrese los ingredientes!"],
       trim: true,
     },
     Precio: {

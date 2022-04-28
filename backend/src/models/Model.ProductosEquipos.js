@@ -1,39 +1,48 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
+require("dotenv").config();
+const AutoIncrementFactory = require('mongoose-sequence');
+
+const connection = mongoose.createConnection(process.env.MONGODB_URI);
+
+const AutoIncrement = AutoIncrementFactory(connection);
 
 const productosequiposSchema = new Schema(
   {
-    Consecutivo: {
+    consecutivo: {
       type: String,
       required: true,
+      default: 'EU'
     },
-    Numeracion: {
-      type: String,
-      required: true,
+    numeracion: {
+      type: Number,
+      required: true
     },
-    Nombre: {
+    nombre: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar un nombre!"],
       trim: true
     },
-    Restaurante: {
+    restaurante: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar un restaurante!"]
     },
-    Marca: {
+    marca: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar una marca!"]
     },
-    Cantidad: {
+    cantidad: {
       type: String,
-      required: true
+      required: [true, "Por favor ingresar una cantidad!"]
     },
-    Descripcion: {
+    descripcion: {
       type: String,
-      required: true,
+      required: [true, "Por favor ingresar una descripcion!"],
       trim: true
     }
   },
   { timestamps: true, versionKey: false }
 );
+productosequiposSchema.plugin(AutoIncrement, {inc_field: 'numeracion'});
 
 module.exports = model("productosequipos", productosequiposSchema);
+
