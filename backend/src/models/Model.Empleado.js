@@ -2,56 +2,52 @@ const { Schema, model } = require("mongoose");
 
 const empleadoSchema = new Schema(
   {
-    Consecutivo: {
+    consecutivo: {
       type: String,
       required: true,
     },
-    Numeracion: {
-      type: String,
-      required: true,
-    },
-    Cedula: {
+    cedula: {
       type: String,
       required: [true, "Por favor ingresar su cedula!"],
       trim: true,
     },
-    Nombre: {
+    nombre: {
       type: String,
       required: [true, "Por favor ingresar su nombre!"],
       trim: true,
     },
-    PrimerApellido: {
+    primerapellido: {
       type: String,
       required: [true, "Por favor ingresar su primer apellido!"],
       trim: true,
     },
-    SegundoApellido: {
+    segundoapellido: {
       type: String,
       required: [true, "Por favor ingresar su segundo apellido!"],
       trim: true,
     },
-    NumeroTelefono: {
+    numerotelefono: {
       type: String,
       required: [true, "Por favor ingresar un numero telefonico!"]
     },
-    Celular: {
+    celular: {
       type: String,
       required: [true, "Por favor ingresar un numero celular!"]
     },
-    Puesto: {
+    puesto: {
         type: String,
         required: [true, "Por favor ingresar un puesto!"]
     },
-    Nacionalidad: {
+    nacionalidad: {
         type: String,
         required: [true, "Por favor ingresar una nacionalidad!"],
         trim: true
     },
-    Restaurante: {
+    restaurante: {
         type: String,
         required: [true, "Por favor ingresar un restaurante!"]
     },
-    Foto: {
+    foto: {
         type: String,
         required: true
     }

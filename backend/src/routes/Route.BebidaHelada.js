@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const router = Router();
 
-const { createBebiHelaCtrl } = require('../controllers/bebidahelada.controller');
+const { getBebiHelas, } = require('../controllers/bebidahelada.controller');
 
 router.route('/bebida')
-    //.get(getUsers)
+    .get(getBebiHelas)
     .post(createBebiHelaCtrl);
 
 /*router.route('/:id')

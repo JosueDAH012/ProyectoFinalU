@@ -2,27 +2,23 @@ const { Schema, model } = require("mongoose");
 
 const mesaSchema = new Schema(
   {
-    Consecutivo: {
+    consecutivo: {
       type: String,
       required: true,
     },
-    Numeracion: {
-      type: String,
-      required: true,
-    },
-    Nombre: {
+    nombre: {
       type: String,
       required: [true, "Por favor ingresar un nombre!"]
     },
-    Numero: {
+    numero: {
       type: String,
       required: [true, "Por favor ingresar el numero de mesa!"]
     },
-    CantidadSillas: {
+    cantidadsillas: {
       type: String,
       required: [true, "Por favor ingresar la cantidad de sillas!"]
     },
-    Restaurante: {
+    restaurante: {
       type: String,
       required: [true, "Por favor ingresar un restaurante!"]
     }

@@ -2,33 +2,29 @@ const { Schema, model } = require("mongoose");
 
 const buffetSchema = new Schema(
   {
-    Consecutivo: {
+    consecutivo: {
       type: String,
       required: true
     },
-    Numeracion: {
-      type: String,
-      required: true
-    },
-    Nombre: {
+    nombre: {
       type: String,
       required: [true, "Por favor ingresar el nombre!"],
       trim: true,
     },
-    Precio: {
+    precio: {
       type: String,
       required: [true, "Por favor ingresar el precio!"],
     },
-    Tipo: {
+    tipo: {
       type: String,
       required: [true, "Por favor ingresar el tipo de buffet!"],
       trim: true,
     },
-    UnidadDeMedida: {
+    unidaddemedida: {
       type: String,
       required: [true, "Por favor ingresar la unidad de medida!"],
     },
-    Foto: {
+    foto: {
       type: String,
       required: true,
     },

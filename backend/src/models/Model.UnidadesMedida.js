@@ -13,10 +13,6 @@ const unidadesmedidaSchema = new Schema(
       required: true,
       default: 'UM'
     },
-    numeracion: {
-      type: Number,
-      required: true,
-    },
     unidadmedida: {
       type: String,
       required: [true, "Por favor ingresar la unidad de medida!"],

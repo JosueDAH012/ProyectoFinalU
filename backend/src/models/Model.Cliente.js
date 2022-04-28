@@ -2,38 +2,34 @@ const { Schema, model } = require("mongoose");
 
 const clienteSchema = new Schema(
   {
-    Consecutivo: {
+    consecutivo: {
       type: String,
       required: true
     },
-    Numeracion: {
-      type: String,
-      required: true
-    },
-    NombreCompleto: {
+    nombrecompleto: {
       type: String,
       required: [true, "Por favor ingresar su nombre!"],
       trim: true,
     },
-    MontoPagado: {
+    montopagado: {
       type: String,
       required: [true, "Por favor ingresar su monto pagado!"]
     },
-    Detalle: {
+    detalle: {
       type: String,
       required: [true, "Por favor ingresar un detalle!"],
       trim: true,
     },
-    FechaVenta: {
+    fechaventa: {
       type: Date,
       required: true,
       default: new Date()
     },
-    Reservacion: {
+    reservacion: {
       type: String,
       required: [true, "Por favor ingresar una reservacion!"]
     },
-    Restaurante: {
+    restaurante: {
       type: String,
       required: [true, "Por favor ingresar un restaurante!"]
     }

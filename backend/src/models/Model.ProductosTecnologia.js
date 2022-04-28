@@ -14,7 +14,6 @@ const productostecnologiaSchema = new Schema(
       required: true,
       default: 'TE'
     },
-
     nombre: {
       type: String,
       required: [true, "Por favor ingresar un nombre!"],

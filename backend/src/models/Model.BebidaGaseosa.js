@@ -2,46 +2,42 @@ const { Schema, model } = require("mongoose");
 
 const bebidagaseosaSchema = new Schema(
   {
-    Consecutivo: {
+    consecutivo: {
       type: String,
       required: true,
     },
-    Numeracion: {
-      type: String,
-      required: true,
-    },
-    Nombre: {
+    nombre: {
       type: String,
       required: [true, "Por favor ingresar un nombre!"],
       trim: true,
     },
-    Precio: {
+    precio: {
       type: String,
       required: [true, "Por favor ingresar un precio!"]
     },
-    Restaurante: {
+    restaurante: {
       type: String,
       required: [true, "Por favor ingresar un restaurante!"],
     },
-    Descripcion: {
+    descripcion: {
       type: String,
       required: [true, "Por favor ingresar una descripcion!"],
       trim: true,
     },
-    Foto: {
+    foto: {
       type: String,
       required: true,
     },
-    Cantidad: {
+    cantidad: {
       type: String,
       required: [true, "Por favor ingresar la cantidad!"],
     },
-    Nacionalidad: {
+    nacionalidad: {
       type: String,
       required: [true, "Por favor ingresar la nacionalidad!"],
       trim: true,
     },
-    Marca: {
+    marca: {
       type: String,
       required: [true, "Por favor ingresar una marca!"],
       trim: true,

@@ -2,53 +2,49 @@ const { Schema, model } = require("mongoose");
 
 const marcaSchema = new Schema(
   {
-    Consecutivo: {
+    consecutivo: {
       type: String,
       required: true,
     },
-    Numeracion: {
-      type: String,
-      required: true,
-    },
-    Nombre: {
+    nombre: {
       type: String,
       required: [true, "Por favor ingresar un nombre!"],
       trim: true,
     },
-    Nacionalidad: {
+    nacionalidad: {
       type: String,
       required: [true, "Por favor ingresar la nacionalidad!"]
     },
-    Descripcion: {
+    descripcion: {
       type: String,
       required: [true, "Por favor ingresar una descripcion!"],
       trim: true
     },
-    CedulaJuridica: {
+    cedulajuridica: {
       type: String,
       required: [true, "Por favor ingresar la cedula juridica!"],
       unique: true
     },
-    Empresa: {
+    empresa: {
       type: String,
       required: [true, "Por favor ingresar el nombre de la empresa!"],
       trim: true
     },
-    DetalleEmpresa: {
+    detalleempresa: {
       type: String,
       required: [true, "Por favor ingresar un detalle de la empresa!"],
       trim: true
     },
-    NumeroTelefono: {
+    numerotelefono: {
       type: String,
       required: [true, "Por favor ingresar un numero de telefono!"],
       unique: true
     },
-    FotoMarca: {
+    fotomarca: {
       type: String,
       required: true,
     },
-    FotoEmpresa: {
+    fotoempresa: {
       type: String,
       required: true,
     }

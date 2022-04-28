@@ -13,10 +13,6 @@ const productosequiposSchema = new Schema(
       required: true,
       default: 'EU'
     },
-    numeracion: {
-      type: Number,
-      required: true
-    },
     nombre: {
       type: String,
       required: [true, "Por favor ingresar un nombre!"],

@@ -2,30 +2,26 @@ const { Schema, model } = require("mongoose");
 
 const bitacoraSchema = new Schema(
   {
-    UsuarioID: {
+    usuarioID: {
       type: String,
       required: [true, "Por favor ingresar el usuario id!"],
       unique: true,
     },
-    Consecutivo: {
+    consecutivo: {
       type: String,
       required: true
     },
-    Numeracion: {
-      type: String,
-      required: true
-    },
-    Fecha: {
+    fecha: {
       type: Date,
       required: true,
       default: new Date()
     },
-    Titulo: {
+    titulo: {
       type: String,
       required: [true, "Por favor ingresar un titulo!"],
       trim: true,
     },
-    Descripcion: {
+    descripcion: {
       type: String,
       required: [true, "Por favor ingresar una descripcion!"],
       trim: true,

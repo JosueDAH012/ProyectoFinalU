@@ -14,10 +14,6 @@ const pdSchema = new Schema(
       required: true,
       default: 'DE'
     },
-    numeracion: {
-      type: Number,
-      required: true,
-    },
     nombre: {
       type: String,
       required: [true, "Por favor ingresar un nombre!"],

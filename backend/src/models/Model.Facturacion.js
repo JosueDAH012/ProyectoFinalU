@@ -2,29 +2,25 @@ const { Schema, model } = require("mongoose");
 
 const facturacionSchema = new Schema(
   {
-    Consecutivo: {
+    consecutivo: {
       type: String,
       required: true,
     },
-    Numeracion: {
-      type: String,
-      required: true,
-    },
-    TipoFecha: { 
+    tipofecha: { 
       type: Date,
       required: true,
       default: new Date()
     },
-    Descripcion: {
+    descripcion: {
       type: String,
       required: [true, "Por favor ingresar una descripcion!"],
       trim: true
     },
-    Monto: {
+    monto: {
       type: String,
       required: [true, "Por favor ingresar un monto!"]
     },
-    Restaurante: {
+    restaurante: {
       type: String,
       required: [true, "Por favor ingresar un restaurante!"]
     }

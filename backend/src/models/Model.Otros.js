@@ -2,19 +2,19 @@ const { Schema, model } = require("mongoose");
 
 const otrosSchema = new Schema(
   {
-    TipoBuffet: {
+    tipobuffet: {
       type: String,
     },
-    TipoFacturacion: {
+    tipofacturacion: {
       type: String,
     },
-    ClaseComestible: {
+    clasecomestible: {
       type: String,
     },
-    LineaComestible: {
+    lineacomestible: {
       type: String,
     },
-    TipoComestible: {
+    tipocomestible: {
       type: String,
     }
   },

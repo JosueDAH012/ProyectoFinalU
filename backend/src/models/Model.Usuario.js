@@ -8,45 +8,41 @@ const AutoIncrement = AutoIncrementFactory(connection);
 
 const usuarioSchema = new mongoose.Schema(
   {
-    Consecutivo: {
+    consecutivo: {
       type: String,
       required: true,
       default: 'USU'
     },
-    Numeracion: {
-      type: Number,
-      required: true,
-    },
-    Nombre: {
+    nombre: {
       type: String,
       required: [true, "Por favor ingresar su nombre!"],
       trim: true,
     },
-    PrimerApellido: {
+    primerapellido: {
       type: String,
       required: [true, "Por favor ingresaer su primer apellido!"],
       trim: true,
     },
-    SegundoApellido: {
+    segundoapellido: {
       type: String,
       required: [true, "Por favor ingresar su segundo apellido!"],
       trim: true,
     },
-    NumeroTelefono: {
+    numerotelefono: {
       type: String,
       required:  [true, "Por favor ingresaer un numero telefonico!"],
     },
-    Celular: {
+    celular: {
       type: String,
       required:  [true, "Por favor ingresaer un numero celular!"],
     },
-    Username: {
+    username: {
       type: String,
       required: [true, "Por favor ingresar un nombre de usuario!"],
       trim: true,
       unique: true,
     },
-    Password: {
+    password: {
       type: String,
       required: [true, "Por favor ingresar una contraseña!"],
       trim: true,
@@ -55,7 +51,7 @@ const usuarioSchema = new mongoose.Schema(
       type: String,
       default: "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
     },
-    Rol: {
+    rol: {
       type: String,
       required: true,
     },

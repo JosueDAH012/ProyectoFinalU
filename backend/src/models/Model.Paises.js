@@ -13,10 +13,6 @@ const paisesSchema = new Schema(
       required: true,
       default: 'P'
     },
-    numeracion: {
-      type: Number,
-      required: true,
-    },
     nombre: {
       type: String,
       required: [true, "Por favor ingresar un nombre!"]

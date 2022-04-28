@@ -2,37 +2,33 @@ const { Schema, model } = require("mongoose");
 
 const cajaSchema = new Schema(
   {
-    Consecutivo: {
+    consecutivo: {
       type: String,
       required: true
     },
-    Numeracion: {
-      type: String,
-      required: true
-    },
-    Fecha: {
+    fecha: {
       type: Date,
       required: true,
       default: new Date()
     },
-    Descripcion: {
+    descripcion: {
       type: String,
       required: [true, "Por favor ingresar una descripcion!"],
       trim: true,
     },
-    EntradaDinero: {
+    entradadinero: {
       type: String,
       required: [true, "Por favor ingresar la entrada de dinero!"]
     },
-    AperturaCaja: {
+    aperturacaja: {
       type: String,
       required: [true, "Por favor ingresar la apertura de caja!"]
     },
-    CierreCaja: {
+    cierrecaja: {
       type: String,
       required: [true, "Por favor ingresar el cierre de caja!"]
     },
-    Restaurante: {
+    restaurante: {
         type: String,
         required: [true, "Por favor ingresar un restaurante!"]
     }
