@@ -5,6 +5,7 @@ const empleadoSchema = new Schema(
     consecutivo: {
       type: String,
       required: true,
+      default: 'EMP'
     },
     cedula: {
       type: String,
@@ -49,7 +50,7 @@ const empleadoSchema = new Schema(
     },
     foto: {
         type: String,
-        required: true
+        default: "https://res.cloudinary.com/mowglirealg/image/upload/v1651183875/cliente/avatar_p7d0ru.png"
     }
   },
   { timestamps: true, versionKey: false }

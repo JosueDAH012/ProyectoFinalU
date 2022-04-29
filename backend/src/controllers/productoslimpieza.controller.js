@@ -68,7 +68,7 @@ proLimpCtrl.createProLimp = (req, res) => {
 proLimpCtrl.getProLimp = (req, res) => {
     const { id } = req.params;
     ProLimp
-    .findOne({id: id})
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
       const prolimp = new ProLimp()

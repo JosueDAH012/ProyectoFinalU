@@ -7,122 +7,140 @@ const Marca = require('../models/Model.Marca');
 const key = process.env.KEY;
 const cipher = aes256.createCipher(key);
 
-bebiCaleCtrl.getBebiCales = (req, res) => {
-    const umedidas = [];
-    BebiCale.find((err, umedida) => {
-      if (err || !umedida) {
+marcaCtrl.getMarcas = (req, res) => {
+    const marcas = [];
+    Marca.find((err, marca) => {
+      if (err || !marca) {
         return res.status(500).send({ message: "error en la base de datos" });
       }
-      console.log(umedida);
-      umedida.forEach((data) => {
-        const umedida = new BebiCale();
-        umedida._id = data._id;
-        umedida.consecutivo = data.consecutivo;
-        umedida.nombre = cipher.decrypt(data.nombre);
-        umedida.ingredientes = cipher.decrypt(data.ingredientes);
-        umedida.precio = cipher.decrypt(data.precio);
-        umedida.restaurante = cipher.decrypt(data.restaurante);
-        umedida.descripcion = cipher.decrypt(data.descripcion);
-        umedida.foto = data.foto;
-        umedidas.push(umedida);
+      console.log(marca);
+      marca.forEach((data) => {
+        const marca = new Marca();
+        marca._id = data._id;
+        marca.consecutivo = data.consecutivo;
+        marca.nombre = cipher.decrypt(data.nombre);
+        marca.nacionalidad = cipher.decrypt(data.nacionalidad);
+        marca.descripcion = cipher.decrypt(data.descripcion);
+        marca.cedulajuridica = cipher.decrypt(data.cedulajuridica);
+        marca.empresa = cipher.decrypt(data.empresa);
+        marca.detalleempresa = cipher.decrypt(data.detalleempresa);
+        marca.numerotelefono = cipher.decrypt(data.numerotelefono);
+        marca.fotomarca = data.fotomarca;
+        marcas.push(marca);
       });
   
-      return res.status(200).send({ umedida: umedidas });
+      return res.status(200).send({ marca: marcas });
     });
   };
 
-bebiCaleCtrl.createBebiCale = (req, res) => {
+marcaCtrl.createMarca = (req, res) => {
   //const para encriptar
   const nombreencript = cipher.encrypt(req.body.nombre);
-  const ingredientesencript = cipher.encrypt(req.body.ingredientes);
-  const precioencript = cipher.encrypt(req.body.precio);
-  const restauranteencript = cipher.encrypt(req.body.restaurante);
+  const nacionalidadencript = cipher.encrypt(req.body.nacionalidad);
   const descripcionencript = cipher.encrypt(req.body.descripcion);
+  const cedulajuridicaencript = cipher.encrypt(req.body.cedulajuridica);
+  const empresaencript = cipher.encrypt(req.body.empresa);
+  const detalleempresaencript = cipher.encrypt(req.body.detalleempresa);
+  const numerotelefonoencript = cipher.encrypt(req.body.numerotelefono);
   //console.log(parametros unidad de medida);
-  const umedida = new BebiCale({
+  const marca = new Marca({
     consecutivo: consecutivo,
     nombre: nombreencript,
-    ingredientes: ingredientesencript, 
-    precio: precioencript,
-    restaurante: restauranteencript,
+    nacionalidad: nacionalidadencript, 
     descripcion: descripcionencript,
-    foto: foto,
+    cedulajuridica: cedulajuridicaencript,
+    empresa: empresaencript,
+    detalleempresa: detalleempresaencript,
+    numerotelefono: numerotelefonoencript,
+    fotomarca: fotomarca,
   });
-  umedida.save(function (error, umedida) {
+  marca.save(function (error, marca) {
     if (error) {
       return res.status(500).json({
         message: error,
       });
     }
-    return res.json(umedida);
+    return res.json(marca);
     //res.json({message: 'Unidad de medida creado'})
   });
 };
 
-bebiCaleCtrl.getBebiCale = (req, res) => {
+marcaCtrl.getMarca = (req, res) => {
     const { id } = req.params;
-    BebiCale
-    .findOne({id: id})
+    Marca
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
-      const umedida = new BebiCale()
-      umedida._id = data._id;
-      umedida.consecutivo = data.consecutivo;
-      umedida.unidadmedida = cipher.decrypt(data.unidadmedida);
-      umedida.escala = cipher.decrypt(data.escala);
-      umedida.detalle = cipher.decrypt(data.detalle);
-      umedida.simbologia = cipher.decrypt(data.simbologia);
-      return res.status(200).send({umedida: umedida})
+      const marca = new Marca()
+      marca._id = data._id;
+      marca.consecutivo = data.consecutivo;
+      marca.nombre = cipher.decrypt(data.nombre);
+      marca.nacionalidad = cipher.decrypt(data.nacionalidad);
+      marca.descripcion = cipher.decrypt(data.descripcion);
+      marca.cedulajuridica = cipher.decrypt(data.cedulajuridica);
+      marca.empresa = cipher.decrypt(data.empresa);
+      marca.detalleempresa = cipher.decrypt(data.detalleempresa);
+      marca.numerotelefono = cipher.decrypt(data.numerotelefono);
+      marca.fotomarca = data.fotomarca;
+      
+      return res.status(200).send({marca: marca})
     })
     .catch((error) => res.json({ message: error }));
 }
 
 //eliminar una unidad de medida
-bebiCaleCtrl.deleteBebiCale = (req, res) => {
+marcaCtrl.deleteMarca = (req, res) => {
     const { id } = req.params;
-    BebiCale
+    Marca
       .remove({ _id: id })
       .then((data) => res.json(data))
       .catch((error) => res.json({ message: error }));
   };
 
   //update una unidad de medida
-  bebiCaleCtrl.updateBebiCale = (req, res) => {
+  marcaCtrl.updateMarca = (req, res) => {
     const { id } = req.params;
-    const {unidadmedida, escala, detalle, simbologia} = req.body;
-    const unidadmedidacrypt = cipher.encrypt(unidadmedida);
-    const escalacrypt = cipher.encrypt(escala);
-    const detallecrypt = cipher.encrypt(detalle);
-    const simbologiacrypt = cipher.encrypt(simbologia);
+    const {nombre, nacionalidad, descripcion, cedulajuridica,
+      empresa, detalleempresa, numerotelefono} = req.body;
+    const nombrecrypt = cipher.encrypt(nombre);
+    const nacionalidadcrypt = cipher.encrypt(nacionalidad);
+    const descripcioncrypt = cipher.encrypt(descripcion);
+    const cedulajuridicacrypt = cipher.encrypt(cedulajuridica);
+    const empresacrypt = cipher.encrypt(empresa);
+    const detalleempresacrypt = cipher.encrypt(detalleempresa);
+    const numerotelefonocrypt = cipher.encrypt(numerotelefono);
     //Validar si el email ya esta registrado
-    BebiCale.findOne({_id: id}, (err, data) => {
-      const unidaddemedidacrypt = cipher.decrypt(data.unidadmedida)
-      const umedida = {
-        unidadmedida: unidadmedidacrypt,
-        escala: escalacrypt,
-        detalle: detallecrypt,
-        simbologia: simbologiacrypt
+    Marca.findOne({_id: id}, (err, data) => {
+      const nombreecrypt = cipher.decrypt(data.nombre)
+      const marca = {
+        nombre: nombrecrypt,
+        nacionalidad: nacionalidadcrypt,
+        descripcion: descripcioncrypt,
+        cedulajuridica: cedulajuridicacrypt,
+        empresa: empresacrypt,
+        detalleempresa: detalleempresacrypt,
+        numerotelefono: numerotelefonocrypt
       };                                                                                             
       if(err){
           return res.status(500).send({
               message: 'Error al buscar coincidencia de email'
           });
       };
-      if(data && unidaddemedidacrypt.includes(unidadmedida)){
+      if(data && nombreecrypt.includes(nombre)){
           return res.status(200).send({
               message: 'La unidad de medida ya esta registrado'
           });
       }
       // Buscar y actualizar unidad de medida
-     BebiCale.findOneAndUpdate({_id: id}, umedida, {new:true}, (err, umedidaUpdated) => {
-        if(err || !umedidaUpdated){
+     Marca.findOneAndUpdate({_id: id}, marca, {new:true}, (err, marcaUpdated) => {
+        if(err || !marcaUpdated){
             return res.status(500).send({
                 message: 'Error al actualizar documento'
             })
         };
         return res.status(200).send({
             status: 'success',
-            user: umedidaUpdated
+            user: marcaUpdated
         }); 
       }); 
   

@@ -4,24 +4,24 @@ const validator = require("validator");
 module.exports = function ValidateProfile(data) {
   let errors = {};
 
-  data.tel = !isEmpty(data.tel) ? data.tel : "";
-  data.city = !isEmpty(data.city) ? data.city : "";
-  data.country = !isEmpty(data.country) ? data.country : "";
-  data.postalcode = !isEmpty(data.postalcode) ? data.postalcode : "";
+  data.primerapellido = !isEmpty(data.primerapellido) ? data.primerapellido : "";
+  data.segundoapellido = !isEmpty(data.segundoapellido) ? data.segundoapellido : "";
+  data.numerotelefono = !isEmpty(data.numerotelefono) ? data.numerotelefono : "";
+  data.celular = !isEmpty(data.celular) ? data.celular : "";
 
-  if (validator.isEmpty(data.tel)) {
-    errors.tel = "Required tel";
+  if (validator.isEmpty(data.primerapellido)) {
+    errors.primerapellido = "Required Primer Apellido";
   }
  
-  if (validator.isEmpty(data.city)) {
-    errors.city = "Required city";
+  if (validator.isEmpty(data.segundoapellido)) {
+    errors.segundoapellido = "Required Segundo Apellido";
   }
-  if (validator.isEmpty(data.country)) {
-    errors.country = "Required country";
+  if (validator.isEmpty(data.numerotelefono)) {
+    errors.numerotelefono = "Required Numero Telefono";
   }
   
-  if (validator.isEmpty(data.postalcode)) {
-    errors.postalcode = "Required postalcode";
+  if (validator.isEmpty(data.celular)) {
+    errors.celular = "Required celular";
   }
   
 

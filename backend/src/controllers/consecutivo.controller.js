@@ -7,122 +7,102 @@ const Consecutivo = require('../models/Model.Consecutivo');
 const key = process.env.KEY;
 const cipher = aes256.createCipher(key);
 
-bebiCaleCtrl.getBebiCales = (req, res) => {
-    const umedidas = [];
-    BebiCale.find((err, umedida) => {
-      if (err || !umedida) {
+consecutivoCtrl.getConsecutivos = (req, res) => {
+    const consecutivos = [];
+    Consecutivo.find((err, consecutivo) => {
+      if (err || !consecutivo) {
         return res.status(500).send({ message: "error en la base de datos" });
       }
-      console.log(umedida);
-      umedida.forEach((data) => {
-        const umedida = new BebiCale();
-        umedida._id = data._id;
-        umedida.consecutivo = data.consecutivo;
-        umedida.nombre = cipher.decrypt(data.nombre);
-        umedida.ingredientes = cipher.decrypt(data.ingredientes);
-        umedida.precio = cipher.decrypt(data.precio);
-        umedida.restaurante = cipher.decrypt(data.restaurante);
-        umedida.descripcion = cipher.decrypt(data.descripcion);
-        umedida.foto = data.foto;
-        umedidas.push(umedida);
+      //console.log(consecutivo);
+      consecutivo.forEach((data) => {
+        const consecutivo = new Consecutivo();
+        consecutivo._id = data._id;
+        consecutivo.codigo = cipher.decrypt(data.codigo);
+        consecutivo.descripcion = cipher.decrypt(data.descripcion);
+        consecutivos.push(consecutivo);
       });
   
-      return res.status(200).send({ umedida: umedidas });
+      return res.status(200).send({ consecutivo: consecutivos });
     });
   };
 
-bebiCaleCtrl.createBebiCale = (req, res) => {
+consecutivoCtrl.createConsecutivo = (req, res) => {
   //const para encriptar
-  const nombreencript = cipher.encrypt(req.body.nombre);
-  const ingredientesencript = cipher.encrypt(req.body.ingredientes);
-  const precioencript = cipher.encrypt(req.body.precio);
-  const restauranteencript = cipher.encrypt(req.body.restaurante);
+  const codigoencript = cipher.encrypt(req.body.codigo);
   const descripcionencript = cipher.encrypt(req.body.descripcion);
   //console.log(parametros unidad de medida);
-  const umedida = new BebiCale({
-    consecutivo: consecutivo,
-    nombre: nombreencript,
-    ingredientes: ingredientesencript, 
-    precio: precioencript,
-    restaurante: restauranteencript,
+  const consecutivo = new Consecutivo({
+    codigo: codigoencript,
     descripcion: descripcionencript,
-    foto: foto,
   });
-  umedida.save(function (error, umedida) {
+  consecutivo.save(function (error, consecutivo) {
     if (error) {
       return res.status(500).json({
         message: error,
       });
     }
-    return res.json(umedida);
+    return res.json(consecutivo);
     //res.json({message: 'Unidad de medida creado'})
   });
 };
 
-bebiCaleCtrl.getBebiCale = (req, res) => {
+consecutivoCtrl.getConsecutivo = (req, res) => {
     const { id } = req.params;
-    BebiCale
-    .findOne({id: id})
+    Consecutivo
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
-      const umedida = new BebiCale()
-      umedida._id = data._id;
-      umedida.consecutivo = data.consecutivo;
-      umedida.unidadmedida = cipher.decrypt(data.unidadmedida);
-      umedida.escala = cipher.decrypt(data.escala);
-      umedida.detalle = cipher.decrypt(data.detalle);
-      umedida.simbologia = cipher.decrypt(data.simbologia);
-      return res.status(200).send({umedida: umedida})
+      const consecutivo = new Consecutivo()
+      consecutivo._id = data._id;
+      consecutivo.codigo =cipher.decrypt(data.codigo);
+      consecutivo.descripcion = cipher.decrypt(data.descripcion);
+      return res.status(200).send({consecutivo: consecutivo})
     })
     .catch((error) => res.json({ message: error }));
 }
 
 //eliminar una unidad de medida
-bebiCaleCtrl.deleteBebiCale = (req, res) => {
+consecutivoCtrl.deleteConsecutivo = (req, res) => {
     const { id } = req.params;
-    BebiCale
+    Consecutivo
       .remove({ _id: id })
       .then((data) => res.json(data))
       .catch((error) => res.json({ message: error }));
   };
 
   //update una unidad de medida
-  bebiCaleCtrl.updateBebiCale = (req, res) => {
+  consecutivoCtrl.updateConsecutivo = (req, res) => {
     const { id } = req.params;
-    const {unidadmedida, escala, detalle, simbologia} = req.body;
-    const unidadmedidacrypt = cipher.encrypt(unidadmedida);
-    const escalacrypt = cipher.encrypt(escala);
-    const detallecrypt = cipher.encrypt(detalle);
-    const simbologiacrypt = cipher.encrypt(simbologia);
+    const {codigo, descripcion} = req.body;
+    const codigocrypt = cipher.encrypt(codigo);
+    const descripcioncrypt = cipher.encrypt(descripcion);
     //Validar si el email ya esta registrado
-    BebiCale.findOne({_id: id}, (err, data) => {
-      const unidaddemedidacrypt = cipher.decrypt(data.unidadmedida)
-      const umedida = {
-        unidadmedida: unidadmedidacrypt,
-        escala: escalacrypt,
-        detalle: detallecrypt,
-        simbologia: simbologiacrypt
+    Consecutivo.findOne({_id: id}, (err, data) => {
+      const codigoocrypt = cipher.decrypt(data.codigo)
+      const consecutivo = {
+        codigo: codigocrypt,
+        descripcion: descripcioncrypt,
       };                                                                                             
       if(err){
           return res.status(500).send({
               message: 'Error al buscar coincidencia de email'
           });
       };
-      if(data && unidaddemedidacrypt.includes(unidadmedida)){
+      if(data && codigoocrypt.includes(codigo)){
           return res.status(200).send({
               message: 'La unidad de medida ya esta registrado'
           });
       }
       // Buscar y actualizar unidad de medida
-     BebiCale.findOneAndUpdate({_id: id}, umedida, {new:true}, (err, umedidaUpdated) => {
-        if(err || !umedidaUpdated){
+     Consecutivo.findOneAndUpdate({_id: id}, consecutivo, {new:true}, (err, consecutivoUpdated) => {
+        if(err || !consecutivoUpdated){
             return res.status(500).send({
                 message: 'Error al actualizar documento'
             })
         };
         return res.status(200).send({
             status: 'success',
-            user: umedidaUpdated
+            user: consecutivoUpdated
         }); 
       }); 
   

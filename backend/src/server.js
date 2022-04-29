@@ -3,9 +3,10 @@ const express = require('express');
 const path = require('path');
 const express_session = require('express-session');
 const cookieParser = require('cookie-parser')
+const logger = require('morgan')
 const fileUpload = require('express-fileupload')
 const cors = require('cors');
-
+const passport = require('passport')
 
 const app = express()
 
@@ -13,6 +14,7 @@ const app = express()
 app.set('port', process.env.PUERTO) // Puerto donde corre el back-end.
 
 // Middlewares
+app.use(logger('dev'));
 app.use(cors()); // Se aceptan headers desde cualquier origen.
 app.use(express.static(path.join(__dirname, 'public'))) // Carpeta de archivos estaticos.
 app.use(express.json()) // Server entiende JSON.
@@ -37,6 +39,9 @@ app.use(express_session(express_session_settings)) // Asigna los ajustes de la s
 // Rutas
 app.get('/', (req, res) => res.json({ Proyecto: 'Final Servicios Web 2' }))
 
+/* passport */
+app.use(passport.initialize())
+require('./security/passport')(passport)
 // routes
 app.use('/api/bebidacaliente', require('./routes/Route.BebidaCaliente'));
 app.use('/api/bebidagaseosa', require('./routes/Route.BebidaGaseosa'));
@@ -64,9 +69,7 @@ app.use('/api/proveedores', require('./routes/Route.Proveedores'));
 app.use('/api/puestos', require('./routes/Route.Puestos'));
 app.use('/api/restaurante', require('./routes/Route.Restaurante'));
 app.use('/api/unidadmedida', require('./routes/Route.UnidadesMedida'));
-//app.use('/api/usuario', require('./routes/Route.Usuario'));
-app.use('/user', require('./routes/userRouter'))
-app.use('/api', require('./routes/upload'))
+app.use('/user', require('./routes/Route.UnidadesMedida'))
 
 
 module.exports = app;

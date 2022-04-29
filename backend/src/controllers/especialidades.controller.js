@@ -7,122 +7,119 @@ const Especialidades = require('../models/Model.Especialidades');
 const key = process.env.KEY;
 const cipher = aes256.createCipher(key);
 
-bebiCaleCtrl.getBebiCales = (req, res) => {
-    const umedidas = [];
-    BebiCale.find((err, umedida) => {
-      if (err || !umedida) {
+especialidadesCtrl.getEspecialidadess = (req, res) => {
+    const especialidadess = [];
+    Especialidades.find((err, especialidades) => {
+      if (err || !especialidades) {
         return res.status(500).send({ message: "error en la base de datos" });
       }
-      console.log(umedida);
-      umedida.forEach((data) => {
-        const umedida = new BebiCale();
-        umedida._id = data._id;
-        umedida.consecutivo = data.consecutivo;
-        umedida.nombre = cipher.decrypt(data.nombre);
-        umedida.ingredientes = cipher.decrypt(data.ingredientes);
-        umedida.precio = cipher.decrypt(data.precio);
-        umedida.restaurante = cipher.decrypt(data.restaurante);
-        umedida.descripcion = cipher.decrypt(data.descripcion);
-        umedida.foto = data.foto;
-        umedidas.push(umedida);
+      console.log(especialidades);
+      especialidades.forEach((data) => {
+        const especialidades = new Especialidades();
+        especialidades._id = data._id;
+        especialidades.consecutivo = data.consecutivo;
+        especialidades.nombre = cipher.decrypt(data.nombre);
+        especialidades.ingredientes = cipher.decrypt(data.ingredientes);
+        especialidades.precio = cipher.decrypt(data.precio);
+        especialidades.detalle = cipher.decrypt(data.detalle);
+        especialidades.foto = data.foto;
+        especialidadess.push(especialidades);
       });
   
-      return res.status(200).send({ umedida: umedidas });
+      return res.status(200).send({ especialidades: especialidadess });
     });
   };
 
-bebiCaleCtrl.createBebiCale = (req, res) => {
+especialidadesCtrl.createEspecialidades = (req, res) => {
   //const para encriptar
   const nombreencript = cipher.encrypt(req.body.nombre);
   const ingredientesencript = cipher.encrypt(req.body.ingredientes);
   const precioencript = cipher.encrypt(req.body.precio);
-  const restauranteencript = cipher.encrypt(req.body.restaurante);
-  const descripcionencript = cipher.encrypt(req.body.descripcion);
+  const detalleencript = cipher.encrypt(req.body.detalle);
   //console.log(parametros unidad de medida);
-  const umedida = new BebiCale({
+  const especialidades = new Especialidades({
     consecutivo: consecutivo,
     nombre: nombreencript,
     ingredientes: ingredientesencript, 
     precio: precioencript,
-    restaurante: restauranteencript,
-    descripcion: descripcionencript,
+    detalle: detalleencript,
     foto: foto,
   });
-  umedida.save(function (error, umedida) {
+  especialidades.save(function (error, especialidades) {
     if (error) {
       return res.status(500).json({
         message: error,
       });
     }
-    return res.json(umedida);
+    return res.json(especialidades);
     //res.json({message: 'Unidad de medida creado'})
   });
 };
 
-bebiCaleCtrl.getBebiCale = (req, res) => {
+especialidadesCtrl.getEspecialidades = (req, res) => {
     const { id } = req.params;
-    BebiCale
-    .findOne({id: id})
+    Especialidades
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
-      const umedida = new BebiCale()
-      umedida._id = data._id;
-      umedida.consecutivo = data.consecutivo;
-      umedida.unidadmedida = cipher.decrypt(data.unidadmedida);
-      umedida.escala = cipher.decrypt(data.escala);
-      umedida.detalle = cipher.decrypt(data.detalle);
-      umedida.simbologia = cipher.decrypt(data.simbologia);
-      return res.status(200).send({umedida: umedida})
+      const especialidades = new Especialidades()
+      especialidades._id = data._id;
+      especialidades.consecutivo = data.consecutivo;
+      especialidades.nombre = cipher.decrypt(data.nombre);
+      especialidades.ingredientes = cipher.decrypt(data.ingredientes);
+      especialidades.precio = cipher.decrypt(data.precio);
+      especialidades.detalle = cipher.decrypt(data.detalle);
+      return res.status(200).send({especialidades: especialidades})
     })
     .catch((error) => res.json({ message: error }));
 }
 
 //eliminar una unidad de medida
-bebiCaleCtrl.deleteBebiCale = (req, res) => {
+especialidadesCtrl.deleteEspecialidades = (req, res) => {
     const { id } = req.params;
-    BebiCale
+    Especialidades
       .remove({ _id: id })
       .then((data) => res.json(data))
       .catch((error) => res.json({ message: error }));
   };
 
   //update una unidad de medida
-  bebiCaleCtrl.updateBebiCale = (req, res) => {
+  especialidadesCtrl.updateEspecialidades = (req, res) => {
     const { id } = req.params;
-    const {unidadmedida, escala, detalle, simbologia} = req.body;
-    const unidadmedidacrypt = cipher.encrypt(unidadmedida);
-    const escalacrypt = cipher.encrypt(escala);
+    const {nombre, ingredientes, precio, simbologia} = req.body;
+    const nombrecrypt = cipher.encrypt(nombre);
+    const ingredientescrypt = cipher.encrypt(ingredientes);
+    const preciocrypt = cipher.encrypt(precio);
     const detallecrypt = cipher.encrypt(detalle);
-    const simbologiacrypt = cipher.encrypt(simbologia);
     //Validar si el email ya esta registrado
-    BebiCale.findOne({_id: id}, (err, data) => {
-      const unidaddemedidacrypt = cipher.decrypt(data.unidadmedida)
-      const umedida = {
-        unidadmedida: unidadmedidacrypt,
-        escala: escalacrypt,
-        detalle: detallecrypt,
-        simbologia: simbologiacrypt
+    Especialidades.findOne({_id: id}, (err, data) => {
+      const nombreecrypt = cipher.decrypt(data.nombre)
+      const especialidades = {
+        nombre: nombrecrypt,
+        ingredientes: ingredientescrypt,
+        precio: preciocrypt,
+        detalle: detallecrypt
       };                                                                                             
       if(err){
           return res.status(500).send({
               message: 'Error al buscar coincidencia de email'
           });
       };
-      if(data && unidaddemedidacrypt.includes(unidadmedida)){
+      if(data && nombreecrypt.includes(nombre)){
           return res.status(200).send({
               message: 'La unidad de medida ya esta registrado'
           });
       }
       // Buscar y actualizar unidad de medida
-     BebiCale.findOneAndUpdate({_id: id}, umedida, {new:true}, (err, umedidaUpdated) => {
-        if(err || !umedidaUpdated){
+     Especialidades.findOneAndUpdate({_id: id}, especialidades, {new:true}, (err, especialidadesUpdated) => {
+        if(err || !especialidadesUpdated){
             return res.status(500).send({
                 message: 'Error al actualizar documento'
             })
         };
         return res.status(200).send({
             status: 'success',
-            user: umedidaUpdated
+            user: especialidadesUpdated
         }); 
       }); 
   

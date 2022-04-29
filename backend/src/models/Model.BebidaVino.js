@@ -5,6 +5,7 @@ const bebidavinoSchema = new Schema(
     consecutivo: {
       type: String,
       required: true,
+      default: 'V'
     },
     nombre: {
       type: String,
@@ -22,7 +23,7 @@ const bebidavinoSchema = new Schema(
     },
     foto: {
       type: String,
-      required: true,
+      default: "https://res.cloudinary.com/mowglirealg/image/upload/v1651183623/bebidavino/778559671580359500-128_dhmlil.png"
     },
     cantidad: {
       type: String,

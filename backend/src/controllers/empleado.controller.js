@@ -7,122 +7,153 @@ const Empleado = require('../models/Model.Empleado');
 const key = process.env.KEY;
 const cipher = aes256.createCipher(key);
 
-bebiCaleCtrl.getBebiCales = (req, res) => {
-    const umedidas = [];
-    BebiCale.find((err, umedida) => {
-      if (err || !umedida) {
+empleadoCtrl.getEmpleados = (req, res) => {
+    const empleados = [];
+    Empleado.find((err, empleado) => {
+      if (err || !empleado) {
         return res.status(500).send({ message: "error en la base de datos" });
       }
-      console.log(umedida);
-      umedida.forEach((data) => {
-        const umedida = new BebiCale();
-        umedida._id = data._id;
-        umedida.consecutivo = data.consecutivo;
-        umedida.nombre = cipher.decrypt(data.nombre);
-        umedida.ingredientes = cipher.decrypt(data.ingredientes);
-        umedida.precio = cipher.decrypt(data.precio);
-        umedida.restaurante = cipher.decrypt(data.restaurante);
-        umedida.descripcion = cipher.decrypt(data.descripcion);
-        umedida.foto = data.foto;
-        umedidas.push(umedida);
+      console.log(empleado);
+      empleado.forEach((data) => {
+        const empleado = new Empleado();
+        empleado._id = data._id;
+        empleado.consecutivo = data.consecutivo;
+        empleado.cedula = cipher.decrypt(data.cedula);
+        empleado.nombre = cipher.decrypt(data.nombre);
+        empleado.primerapellido = cipher.decrypt(data.primerapellido);
+        empleado.segundoapellido = cipher.decrypt(data.segundoapellido);
+        empleado.numerotelefono = cipher.decrypt(data.numerotelefono);
+        empleado.celular = cipher.decrypt(data.celular);
+        empleado.puesto = cipher.decrypt(data.puesto);
+        empleado.nacionalidad = cipher.decrypt(data.nacionalidad);
+        empleado.restaurante = cipher.decrypt(data.restaurante);
+        empleado.foto = data.foto;
+        empleados.push(empleado);
       });
   
-      return res.status(200).send({ umedida: umedidas });
+      return res.status(200).send({ empleado: empleados });
     });
   };
 
-bebiCaleCtrl.createBebiCale = (req, res) => {
+empleadoCtrl.createEmpleado = (req, res) => {
   //const para encriptar
+  const cedulaencript = cipher.encrypt(req.body.cedula)
   const nombreencript = cipher.encrypt(req.body.nombre);
-  const ingredientesencript = cipher.encrypt(req.body.ingredientes);
-  const precioencript = cipher.encrypt(req.body.precio);
+  const primerapellidoencript = cipher.encrypt(req.body.primerapellido);
+  const segundoapellidoencript = cipher.encrypt(req.body.segundoapellido);
+  const numerotelefonoencript = cipher.encrypt(req.body.numerotelefono);
+  const celularencript = cipher.encrypt(req.body.celular);
+  const puestoencript = cipher.encrypt(req.body.puesto);
+  const nacionalidadencript = cipher.encrypt(req.body.nacionalidad);
   const restauranteencript = cipher.encrypt(req.body.restaurante);
-  const descripcionencript = cipher.encrypt(req.body.descripcion);
   //console.log(parametros unidad de medida);
-  const umedida = new BebiCale({
+  const empleado = new Empleado({
     consecutivo: consecutivo,
+    cedula: cedulaencript,
     nombre: nombreencript,
-    ingredientes: ingredientesencript, 
-    precio: precioencript,
+    primerapellido: primerapellidoencript, 
+    segundoapellido: segundoapellidoencript,
+    numerotelefono: numerotelefonoencript,
+    celular: celularencript,
+    puesto: puestoencript,
+    nacionalidad: nacionalidadencript,
     restaurante: restauranteencript,
-    descripcion: descripcionencript,
     foto: foto,
   });
-  umedida.save(function (error, umedida) {
+  empleado.save(function (error, empleado) {
     if (error) {
       return res.status(500).json({
         message: error,
       });
     }
-    return res.json(umedida);
+    return res.json(empleado);
     //res.json({message: 'Unidad de medida creado'})
   });
 };
 
-bebiCaleCtrl.getBebiCale = (req, res) => {
+empleadoCtrl.getEmpleado = (req, res) => {
     const { id } = req.params;
-    BebiCale
-    .findOne({id: id})
+    Empleado
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
-      const umedida = new BebiCale()
-      umedida._id = data._id;
-      umedida.consecutivo = data.consecutivo;
-      umedida.unidadmedida = cipher.decrypt(data.unidadmedida);
-      umedida.escala = cipher.decrypt(data.escala);
-      umedida.detalle = cipher.decrypt(data.detalle);
-      umedida.simbologia = cipher.decrypt(data.simbologia);
-      return res.status(200).send({umedida: umedida})
+      const empleado = new Empleado()
+      empleado._id = data._id;
+      empleado.consecutivo = data.consecutivo;
+      empleado.cedula = cipher.decrypt(data.cedula);
+      empleado.nombre = cipher.decrypt(data.nombre);
+      empleado.primerapellido = cipher.decrypt(data.primerapellido);
+      empleado.segundoapellido = cipher.decrypt(data.segundoapellido);
+      empleado.numerotelefono = cipher.decrypt(data.numerotelefono);
+      empleado.celular = cipher.decrypt(data.celular);
+      empleado.puesto = cipher.decrypt(data.detalpuestole);
+      empleado.nacionalidad = cipher.decrypt(data.nacionalidad);
+      empleado.restaurante = cipher.decrypt(data.restaurante);
+      empleado.foto = data.foto;
+      return res.status(200).send({empleado: empleado})
     })
     .catch((error) => res.json({ message: error }));
 }
 
 //eliminar una unidad de medida
-bebiCaleCtrl.deleteBebiCale = (req, res) => {
+empleadoCtrl.deleteEmpleado = (req, res) => {
     const { id } = req.params;
-    BebiCale
+    Empleado
       .remove({ _id: id })
       .then((data) => res.json(data))
       .catch((error) => res.json({ message: error }));
   };
 
   //update una unidad de medida
-  bebiCaleCtrl.updateBebiCale = (req, res) => {
+  empleadoCtrl.updateEmpleado = (req, res) => {
     const { id } = req.params;
-    const {unidadmedida, escala, detalle, simbologia} = req.body;
-    const unidadmedidacrypt = cipher.encrypt(unidadmedida);
-    const escalacrypt = cipher.encrypt(escala);
-    const detallecrypt = cipher.encrypt(detalle);
-    const simbologiacrypt = cipher.encrypt(simbologia);
+    const {cedula, nombre, primerapellido, segundoapellido, 
+      numerotelefono, celular, puesto, nacionalidad, 
+      restaurante, foto} = req.body;
+    const cedulacrypt = cipher.encrypt(cedula);
+    const nombrecrypt = cipher.encrypt(nombre);
+    const primerapellidocrypt = cipher.encrypt(primerapellido);
+    const segundoapellidocrypt = cipher.encrypt(segundoapellido);
+    const numerotelefonocrypt = cipher.encrypt(numerotelefono);
+    const celularcrypt = cipher.encrypt(celular);
+    const puestocrypt = cipher.encrypt(puesto);
+    const restaurantecrypt = cipher.encrypt(restaurante);
+    const nacionalidadcrypt = cipher.encrypt(nacionalidad);
     //Validar si el email ya esta registrado
-    BebiCale.findOne({_id: id}, (err, data) => {
-      const unidaddemedidacrypt = cipher.decrypt(data.unidadmedida)
-      const umedida = {
-        unidadmedida: unidadmedidacrypt,
-        escala: escalacrypt,
-        detalle: detallecrypt,
-        simbologia: simbologiacrypt
+    Empleado.findOne({_id: id}, (err, data) => {
+      const cedulaacrypt = cipher.decrypt(data.cedula)
+      const empleado = {
+        cedula: cedulacrypt,
+        nombre: nombrecrypt,
+        primerapellido: primerapellidocrypt,
+        segundoapellido: segundoapellidocrypt,
+        numerotelefono: numerotelefonocrypt,
+        celular: celularcrypt,
+        puesto: puestocrypt,
+        nacionalidad: nacionalidadcrypt,
+        restaurante: restaurantecrypt,
+        foto: foto
       };                                                                                             
       if(err){
           return res.status(500).send({
               message: 'Error al buscar coincidencia de email'
           });
       };
-      if(data && unidaddemedidacrypt.includes(unidadmedida)){
+      if(data && cedulaacrypt.includes(cedula)){
           return res.status(200).send({
               message: 'La unidad de medida ya esta registrado'
           });
       }
       // Buscar y actualizar unidad de medida
-     BebiCale.findOneAndUpdate({_id: id}, umedida, {new:true}, (err, umedidaUpdated) => {
-        if(err || !umedidaUpdated){
+     Empleado.findOneAndUpdate({_id: id}, empleado, {new:true}, (err, empleadoUpdated) => {
+        if(err || !empleadoUpdated){
             return res.status(500).send({
                 message: 'Error al actualizar documento'
             })
         };
         return res.status(200).send({
             status: 'success',
-            user: umedidaUpdated
+            user: empleadoUpdated
         }); 
       }); 
   

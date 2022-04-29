@@ -4,7 +4,8 @@ const clienteSchema = new Schema(
   {
     consecutivo: {
       type: String,
-      required: true
+      required: true, 
+      default: 'CLI'
     },
     nombrecompleto: {
       type: String,

@@ -8,26 +8,26 @@ const key = process.env.KEY;
 const cipher = aes256.createCipher(key);
 
 bebiCaleCtrl.getBebiCales = (req, res) => {
-    const umedidas = [];
-    BebiCale.find((err, umedida) => {
-      if (err || !umedida) {
+    const bebicales = [];
+    BebiCale.find((err, bebicale) => {
+      if (err || !bebicale) {
         return res.status(500).send({ message: "error en la base de datos" });
       }
-      console.log(umedida);
-      umedida.forEach((data) => {
-        const umedida = new BebiCale();
-        umedida._id = data._id;
-        umedida.consecutivo = data.consecutivo;
-        umedida.nombre = cipher.decrypt(data.nombre);
-        umedida.ingredientes = cipher.decrypt(data.ingredientes);
-        umedida.precio = cipher.decrypt(data.precio);
-        umedida.restaurante = cipher.decrypt(data.restaurante);
-        umedida.descripcion = cipher.decrypt(data.descripcion);
-        umedida.foto = data.foto;
-        umedidas.push(umedida);
+      console.log(bebicale);
+      bebicale.forEach((data) => {
+        const bebicale = new BebiCale();
+        bebicale._id = data._id;
+        bebicale.consecutivo = data.consecutivo;
+        bebicale.nombre = cipher.decrypt(data.nombre);
+        bebicale.ingredientes = cipher.decrypt(data.ingredientes);
+        bebicale.precio = cipher.decrypt(data.precio);
+        bebicale.restaurante = cipher.decrypt(data.restaurante);
+        bebicale.descripcion = cipher.decrypt(data.descripcion);
+        bebicale.foto = data.foto;
+        bebicales.push(bebicale);
       });
   
-      return res.status(200).send({ umedida: umedidas });
+      return res.status(200).send({ bebicale: bebicales });
     });
   };
 
@@ -39,7 +39,7 @@ bebiCaleCtrl.createBebiCale = (req, res) => {
   const restauranteencript = cipher.encrypt(req.body.restaurante);
   const descripcionencript = cipher.encrypt(req.body.descripcion);
   //console.log(parametros unidad de medida);
-  const umedida = new BebiCale({
+  const bebicale = new BebiCale({
     consecutivo: consecutivo,
     nombre: nombreencript,
     ingredientes: ingredientesencript, 
@@ -48,13 +48,13 @@ bebiCaleCtrl.createBebiCale = (req, res) => {
     descripcion: descripcionencript,
     foto: foto,
   });
-  umedida.save(function (error, umedida) {
+  bebicale.save(function (error, bebicale) {
     if (error) {
       return res.status(500).json({
         message: error,
       });
     }
-    return res.json(umedida);
+    return res.json(bebicale);
     //res.json({message: 'Unidad de medida creado'})
   });
 };
@@ -62,17 +62,19 @@ bebiCaleCtrl.createBebiCale = (req, res) => {
 bebiCaleCtrl.getBebiCale = (req, res) => {
     const { id } = req.params;
     BebiCale
-    .findOne({id: id})
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
-      const umedida = new BebiCale()
-      umedida._id = data._id;
-      umedida.consecutivo = data.consecutivo;
-      umedida.unidadmedida = cipher.decrypt(data.unidadmedida);
-      umedida.escala = cipher.decrypt(data.escala);
-      umedida.detalle = cipher.decrypt(data.detalle);
-      umedida.simbologia = cipher.decrypt(data.simbologia);
-      return res.status(200).send({umedida: umedida})
+      const bebicale = new BebiCale()
+      bebicale._id = data._id;
+      bebicale.consecutivo = data.consecutivo;
+      bebicale.nombre = cipher.decrypt(data.unidadmedida);
+      bebicale.ingredientes = cipher.decrypt(data.ingredientes);
+      bebicale.precio = cipher.decrypt(data.precio);
+      bebicale.restaurante = cipher.decrypt(data.restaurante);
+      bebicale.detaldescripcionle = cipher.decrypt(data.descripcion);
+      bebicale.foto = data.foto;
+      return res.status(200).send({bebicale: bebicale})
     })
     .catch((error) => res.json({ message: error }));
 }
@@ -89,46 +91,48 @@ bebiCaleCtrl.deleteBebiCale = (req, res) => {
   //update una unidad de medida
   bebiCaleCtrl.updateBebiCale = (req, res) => {
     const { id } = req.params;
-    const {unidadmedida, escala, detalle, simbologia} = req.body;
-    const unidadmedidacrypt = cipher.encrypt(unidadmedida);
-    const escalacrypt = cipher.encrypt(escala);
-    const detallecrypt = cipher.encrypt(detalle);
-    const simbologiacrypt = cipher.encrypt(simbologia);
+    const {nombre, ingredientes, precio, restaurante, descripcion } = req.body;
+    const nombrecrypt = cipher.encrypt(nombre);
+    const ingredientescrypt = cipher.encrypt(ingredientes);
+    const preciocrypt = cipher.encrypt(precio);
+    const restaurantecrypt = cipher.encrypt(restaurante);
+    const descripcioncrypt = cipher.encrypt(descripcion);
     //Validar si el email ya esta registrado
     BebiCale.findOne({_id: id}, (err, data) => {
-      const unidaddemedidacrypt = cipher.decrypt(data.unidadmedida)
-      const umedida = {
-        unidadmedida: unidadmedidacrypt,
-        escala: escalacrypt,
-        detalle: detallecrypt,
-        simbologia: simbologiacrypt
+      const nombreecrypt = cipher.decrypt(data.nombre)
+      const bebicale = {
+        nombre: nombrecrypt,
+        ingredientes: ingredientescrypt,
+        precio: preciocrypt,
+        restaurante: restaurantecrypt,
+        descripcion: descripcioncrypt,
+        
       };                                                                                             
       if(err){
           return res.status(500).send({
               message: 'Error al buscar coincidencia de email'
           });
       };
-      if(data && unidaddemedidacrypt.includes(unidadmedida)){
+      if(data && nombreecrypt.includes(nombre)){
           return res.status(200).send({
               message: 'La unidad de medida ya esta registrado'
           });
       }
       // Buscar y actualizar unidad de medida
-     BebiCale.findOneAndUpdate({_id: id}, umedida, {new:true}, (err, umedidaUpdated) => {
-        if(err || !umedidaUpdated){
+     BebiCale.findOneAndUpdate({_id: id}, bebicale, {new:true}, (err, bebicaleUpdated) => {
+        if(err || !bebicaleUpdated){
             return res.status(500).send({
                 message: 'Error al actualizar documento'
             })
         };
         return res.status(200).send({
             status: 'success',
-            user: umedidaUpdated
+            user: bebicaleUpdated
         }); 
       }); 
   
   })
   };
-
 
 
 module.exports = bebiCaleCtrl;

@@ -7,122 +7,117 @@ const Mesa = require('../models/Model.Mesa');
 const key = process.env.KEY;
 const cipher = aes256.createCipher(key);
 
-bebiCaleCtrl.getBebiCales = (req, res) => {
-    const umedidas = [];
-    BebiCale.find((err, umedida) => {
-      if (err || !umedida) {
+mesaCtrl.getMesas = (req, res) => {
+    const mesas = [];
+    Mesa.find((err, mesa) => {
+      if (err || !mesa) {
         return res.status(500).send({ message: "error en la base de datos" });
       }
-      console.log(umedida);
-      umedida.forEach((data) => {
-        const umedida = new BebiCale();
-        umedida._id = data._id;
-        umedida.consecutivo = data.consecutivo;
-        umedida.nombre = cipher.decrypt(data.nombre);
-        umedida.ingredientes = cipher.decrypt(data.ingredientes);
-        umedida.precio = cipher.decrypt(data.precio);
-        umedida.restaurante = cipher.decrypt(data.restaurante);
-        umedida.descripcion = cipher.decrypt(data.descripcion);
-        umedida.foto = data.foto;
-        umedidas.push(umedida);
+      console.log(mesa);
+      mesa.forEach((data) => {
+        const mesa = new Mesa();
+        mesa._id = data._id;
+        mesa.consecutivo = data.consecutivo;
+        mesa.nombre = cipher.decrypt(data.nombre);
+        mesa.numero = cipher.decrypt(data.numero);
+        mesa.cantidadsillas = cipher.decrypt(data.cantidadsillas);
+        mesa.restaurante = cipher.decrypt(data.restaurante);
+        mesas.push(mesa);
       });
   
-      return res.status(200).send({ umedida: umedidas });
+      return res.status(200).send({ mesa: mesas });
     });
   };
 
-bebiCaleCtrl.createBebiCale = (req, res) => {
+mesaCtrl.createMesa = (req, res) => {
   //const para encriptar
   const nombreencript = cipher.encrypt(req.body.nombre);
-  const ingredientesencript = cipher.encrypt(req.body.ingredientes);
-  const precioencript = cipher.encrypt(req.body.precio);
+  const numeroencript = cipher.encrypt(req.body.numero);
+  const cantidadsillasencript = cipher.encrypt(req.body.cantidadsillas);
   const restauranteencript = cipher.encrypt(req.body.restaurante);
-  const descripcionencript = cipher.encrypt(req.body.descripcion);
   //console.log(parametros unidad de medida);
-  const umedida = new BebiCale({
+  const mesa = new Mesa({
     consecutivo: consecutivo,
     nombre: nombreencript,
-    ingredientes: ingredientesencript, 
-    precio: precioencript,
+    numero: numeroencript, 
+    cantidadsillas: cantidadsillasencript,
     restaurante: restauranteencript,
-    descripcion: descripcionencript,
-    foto: foto,
   });
-  umedida.save(function (error, umedida) {
+  mesa.save(function (error, mesa) {
     if (error) {
       return res.status(500).json({
         message: error,
       });
     }
-    return res.json(umedida);
+    return res.json(mesa);
     //res.json({message: 'Unidad de medida creado'})
   });
 };
 
-bebiCaleCtrl.getBebiCale = (req, res) => {
+mesaCtrl.getMesa = (req, res) => {
     const { id } = req.params;
-    BebiCale
-    .findOne({id: id})
+    Mesa
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
-      const umedida = new BebiCale()
-      umedida._id = data._id;
-      umedida.consecutivo = data.consecutivo;
-      umedida.unidadmedida = cipher.decrypt(data.unidadmedida);
-      umedida.escala = cipher.decrypt(data.escala);
-      umedida.detalle = cipher.decrypt(data.detalle);
-      umedida.simbologia = cipher.decrypt(data.simbologia);
-      return res.status(200).send({umedida: umedida})
+      const mesa = new Mesa()
+      mesa._id = data._id;
+      mesa.consecutivo = data.consecutivo;
+      mesa.nombre = cipher.decrypt(data.nombre);
+      mesa.numero = cipher.decrypt(data.numero);
+      mesa.cantidadsillas = cipher.decrypt(data.cantidadsillas);
+      mesa.restaurante = cipher.decrypt(data.restaurante);
+      return res.status(200).send({mesa: mesa})
     })
     .catch((error) => res.json({ message: error }));
 }
 
 //eliminar una unidad de medida
-bebiCaleCtrl.deleteBebiCale = (req, res) => {
+mesaCtrl.deleteMesa = (req, res) => {
     const { id } = req.params;
-    BebiCale
+    Mesa
       .remove({ _id: id })
       .then((data) => res.json(data))
       .catch((error) => res.json({ message: error }));
   };
 
   //update una unidad de medida
-  bebiCaleCtrl.updateBebiCale = (req, res) => {
+  mesaCtrl.updateMesa = (req, res) => {
     const { id } = req.params;
-    const {unidadmedida, escala, detalle, simbologia} = req.body;
-    const unidadmedidacrypt = cipher.encrypt(unidadmedida);
-    const escalacrypt = cipher.encrypt(escala);
-    const detallecrypt = cipher.encrypt(detalle);
-    const simbologiacrypt = cipher.encrypt(simbologia);
+    const {nombre, numero, cantidadsillas, restaurante} = req.body;
+    const nombrecrypt = cipher.encrypt(nombre);
+    const numerocrypt = cipher.encrypt(numero);
+    const cantidadsillascrypt = cipher.encrypt(cantidadsillas);
+    const restaurantecrypt = cipher.encrypt(restaurante);
     //Validar si el email ya esta registrado
-    BebiCale.findOne({_id: id}, (err, data) => {
-      const unidaddemedidacrypt = cipher.decrypt(data.unidadmedida)
-      const umedida = {
-        unidadmedida: unidadmedidacrypt,
-        escala: escalacrypt,
-        detalle: detallecrypt,
-        simbologia: simbologiacrypt
+    Mesa.findOne({_id: id}, (err, data) => {
+      const nombreecrypt = cipher.decrypt(data.nombre)
+      const mesa = {
+        nombre: nombrecrypt,
+        numero: numerocrypt,
+        cantidadsillas: cantidadsillascrypt,
+        restaurante: restaurantecrypt
       };                                                                                             
       if(err){
           return res.status(500).send({
               message: 'Error al buscar coincidencia de email'
           });
       };
-      if(data && unidaddemedidacrypt.includes(unidadmedida)){
+      if(data && nombreecrypt.includes(nombre)){
           return res.status(200).send({
               message: 'La unidad de medida ya esta registrado'
           });
       }
       // Buscar y actualizar unidad de medida
-     BebiCale.findOneAndUpdate({_id: id}, umedida, {new:true}, (err, umedidaUpdated) => {
-        if(err || !umedidaUpdated){
+     Mesa.findOneAndUpdate({_id: id}, mesa, {new:true}, (err, mesaUpdated) => {
+        if(err || !mesaUpdated){
             return res.status(500).send({
                 message: 'Error al actualizar documento'
             })
         };
         return res.status(200).send({
             status: 'success',
-            user: umedidaUpdated
+            user: mesaUpdated
         }); 
       }); 
   

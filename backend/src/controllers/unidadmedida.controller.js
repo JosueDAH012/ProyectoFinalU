@@ -59,7 +59,7 @@ uMedidaCtrl.createUniMe = (req, res) => {
 uMedidaCtrl.getUniMe = (req, res) => {
     const { id } = req.params;
     UMedida
-    .findOne({id: id})
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
       const umedida = new UMedida()

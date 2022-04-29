@@ -1,37 +1,44 @@
-const router = require('express').Router()
-const userCtrl = require('../controllers/userCtrl')
-const auth = require('../middleware/auth')
-const authAdmin = require('../middleware/authAdmin')
+const router = require("express").Router();
+const { Register, Login } = require("../controllers/usuario.controller");
 
-router.post('/register', userCtrl.register)
+const passport = require("passport");
+const { ROLES, inRole } = require("../security/Rolemiddleware");
+const {
+  AddProfile,
+  FindAllProfiles,
+  FindSingleProfile,
+  DeleteProfile,
+} = require("../controllers/profile.controllers");
 
-router.post('/activation', userCtrl.activateEmail)
+/* users routes. */
+router.post("/register", Register);
+router.post("/login", Login);
 
-router.post('/login', userCtrl.login)
+/* add profile route */
+router.post(
+  "/profiles",
+  passport.authenticate("jwt", { session: false }),
+  AddProfile
+);
+/* get all profiles */
+router.get(
+  "/profiles",
+  passport.authenticate("jwt", { session: false }),
+  inRole(ROLES.ADMIN),
+  FindAllProfiles
+);
+/* get one profiles */
+router.get(
+  "/profile",
+  passport.authenticate("jwt", { session: false }),
+  FindSingleProfile
+);
+/* delete profiles */
+router.delete(
+  "/profiles/:id",
+  passport.authenticate("jwt", { session: false }),
+  inRole(ROLES.ADMIN),
+  DeleteProfile
+);
 
-router.post('/refresh_token', userCtrl.getAccessToken)
-
-router.post('/forgot', userCtrl.forgotPassword)
-
-router.post('/reset', auth, userCtrl.resetPassword)
-
-router.get('/infor', auth, userCtrl.getUserInfor)
-
-router.get('/all_infor', auth, authAdmin, userCtrl.getUsersAllInfor)
-
-router.get('/logout', userCtrl.logout)
-
-router.patch('/update', auth, userCtrl.updateUser)
-
-router.patch('/update_role/:id', auth, authAdmin, userCtrl.updateUsersRole)
-
-router.delete('/delete/:id', auth, authAdmin, userCtrl.deleteUser)
-
-
-// Social Login
-router.post('/google_login', userCtrl.googleLogin)
-
-router.post('/facebook_login', userCtrl.facebookLogin)
-
-
-module.exports = router
+module.exports = router;

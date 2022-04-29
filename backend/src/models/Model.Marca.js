@@ -5,6 +5,7 @@ const marcaSchema = new Schema(
     consecutivo: {
       type: String,
       required: true,
+      default: 'M'
     },
     nombre: {
       type: String,
@@ -42,11 +43,7 @@ const marcaSchema = new Schema(
     },
     fotomarca: {
       type: String,
-      required: true,
-    },
-    fotoempresa: {
-      type: String,
-      required: true,
+     default: "https://res.cloudinary.com/mowglirealg/image/upload/v1651184032/marca/2923860021639131342-128_avptts.png"
     }
   },
   { timestamps: true, versionKey: false }

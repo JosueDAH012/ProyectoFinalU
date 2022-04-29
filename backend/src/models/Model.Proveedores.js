@@ -1,20 +1,12 @@
-const { Schema, model, mongoose } = require("mongoose");
-require("dotenv").config();
-const AutoIncrementFactory = require('mongoose-sequence');
-
-const connection = mongoose.createConnection(process.env.MONGODB_URI);
-
-const AutoIncrement = AutoIncrementFactory(connection);
+const { Schema, model } = require("mongoose");
 
 const proveedoresSchema = new Schema(
   {
-    _id: Number,
     consecutivo: {
       type: String,
       required: true,
       default: 'PRO'
     },
-
     nombre: {
       type: String,
       required: [true, "Por favor ingresar un nombre!"],
@@ -82,11 +74,10 @@ const proveedoresSchema = new Schema(
     },
     foto: {
       type: String,
-      required: true
+      default: "https://res.cloudinary.com/mowglirealg/image/upload/v1651184237/proveedor/10274305501591055829-128_hhyzhb.png",
     }
   },
   { timestamps: true, versionKey: false }
 );
-proveedoresSchema.plugin(AutoIncrement);
 
 module.exports = model("proveedores", proveedoresSchema);

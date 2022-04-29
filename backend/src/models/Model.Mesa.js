@@ -5,6 +5,7 @@ const mesaSchema = new Schema(
     consecutivo: {
       type: String,
       required: true,
+      default: 'ME'
     },
     nombre: {
       type: String,

@@ -1,10 +1,4 @@
-const { Schema, model, mongoose } = require("mongoose");
-require("dotenv").config();
-const AutoIncrementFactory = require('mongoose-sequence');
-
-const connection = mongoose.createConnection(process.env.MONGODB_URI);
-
-const AutoIncrement = AutoIncrementFactory(connection);
+const { Schema, model } = require("mongoose");
 
 const productosequiposSchema = new Schema(
   {
@@ -38,7 +32,6 @@ const productosequiposSchema = new Schema(
   },
   { timestamps: true, versionKey: false }
 );
-productosequiposSchema.plugin(AutoIncrement, {inc_field: 'numeracion'});
 
-module.exports = model("productosequipos", productosequiposSchema);
+module.exports = model("productosdeequipos", productosequiposSchema);
 

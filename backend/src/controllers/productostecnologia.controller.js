@@ -62,7 +62,7 @@ proTecnCtrl.createProtecn = (req, res) => {
 proTecnCtrl.getProtecn = (req, res) => {
     const { id } = req.params;
     ProTecn
-    .findOne({id: id})
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
       const protecn = new ProTecn()

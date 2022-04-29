@@ -91,7 +91,7 @@ proveedorCtrl.createProveedor = (req, res) => {
 proveedorCtrl.getProveedor = (req, res) => {
     const { id } = req.params;
     Proveedor
-    .findOne({id: id})
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
       const proveedor = new Proveedor()

@@ -3,9 +3,9 @@ const { Schema, model } = require("mongoose");
 const especialidadesSchema = new Schema(
   {
     consecutivo: {
-      type: Schema.Types.ObjectId,
-      ref: "consecutivo",
+      type: String,
       required: true,
+      default: 'ESP'
     },
     nombre: {
       type: String,
@@ -28,7 +28,7 @@ const especialidadesSchema = new Schema(
     },
     foto: {
       type: String,
-      required: true,
+      default: "https://res.cloudinary.com/mowglirealg/image/upload/v1651183948/especialidad/1178911411621881304-128_waotrv.png"
     },
   },
   { timestamps: true, versionKey: false }

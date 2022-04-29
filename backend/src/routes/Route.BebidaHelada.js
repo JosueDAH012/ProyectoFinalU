@@ -1,13 +1,15 @@
 const { Router } = require('express');
 const router = Router();
 
-const { getBebiHelas, } = require('../controllers/bebidahelada.controller');
+const { getBebiHelas, createBebiHela, getBebiHela, deleteBebiHela, updateBebiHela } = require('../controllers/bebidahelada.controller');
 
-router.route('/bebida')
+router.route('/bebidahelada')
     .get(getBebiHelas)
-    .post(createBebiHelaCtrl);
+    .post(createBebiHela);
 
-/*router.route('/:id')
-    .delete(deleteUser);*/
+router.route('/bebidahelada/:id')
+    .get(getBebiHela)
+    .delete(deleteBebiHela)
+    .put(updateBebiHela);
 
 module.exports = router;

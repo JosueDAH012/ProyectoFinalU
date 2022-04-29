@@ -62,7 +62,7 @@ proEquiCtrl.createProEqui = (req, res) => {
 proEquiCtrl.getProEqui = (req, res) => {
     const { id } = req.params;
     ProEqui
-    .findOne({id: id})
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
       const proequi = new ProEqui()

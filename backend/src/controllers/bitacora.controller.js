@@ -1,6 +1,12 @@
-const AES = require('../libs/lib.aes256');
-const bitacoraCtrl = {};
-
-const Bitacora = require('../models/Model.Bitacora');
-
-module.exports = bitacoraCtrl;
+module.exports = class Bitacora{
+    constructor(){
+        this.ID;
+        // Se guarda el ID para así poder traer
+        // toda la informacion posible de éste.
+        this.UsuarioID;
+        this.Fecha;
+        this.DescripcionTitulo;
+        // Descripción detallada del registro.
+        this.DescripcionCuerpo;
+    }
+}

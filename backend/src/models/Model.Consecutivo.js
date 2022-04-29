@@ -11,8 +11,15 @@ const consecutivoSchema = new Schema(
       type: String,
       unique: true,
       required: true,
-    }[
-      { "Codigo": "CLI", "Descripcion": "Clientes" },
+    }
+  },
+  { timestamps: true, versionKey: false }
+);
+
+module.exports = model("consecutivo", consecutivoSchema);
+
+
+/*{ "Codigo": "CLI", "Descripcion": "Clientes" },
       { "Codigo": "PE", "Descripcion": "Personal" },
       { "Codigo": "PRO", "Descripcion": "Proveedores" },
       { "Codigo": "PU", "Descripcion": "Puestos" },
@@ -38,9 +45,4 @@ const consecutivoSchema = new Schema(
       { "Codigo": "ME", "Descripcion": "Mesas" },
       { "Codigo": "BIT", "Descripcion": "Bitacoras" },
       { "Codigo": "FAC", "Descripcion": "Facturas" }
-    ],
-  },
-  { timestamps: true, versionKey: false }
-);
-
-module.exports = model("consecutivo", consecutivoSchema);
+      */

@@ -1,13 +1,7 @@
-const { Schema, model, mongoose } = require("mongoose");
-require("dotenv").config();
-
-const AutoIncrementFactory = require("mongoose-sequence");
-const connection = mongoose.createConnection(process.env.MONGODB_URI);
-const AutoIncrement = AutoIncrementFactory(connection);
+const { Schema, model } = require("mongoose");
 
 const productoscomestibleSchema = new Schema(
   {
-    _id: Number,
     consecutivo: {
       type: String,
       required: true,
@@ -52,7 +46,6 @@ const productoscomestibleSchema = new Schema(
   },
   { timestamps: true, versionKey: false }
 );
-productoscomestibleSchema.plugin(AutoIncrement);
 
 module.exports = model("productoscomestible", productoscomestibleSchema);
 

@@ -62,7 +62,7 @@ proDesechCtrl.createProDesch = (req, res) => {
 proDesechCtrl.getProDesch = (req, res) => {
     const { id } = req.params;
     ProDesch
-    .findOne({id: id})
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
       const prodesch = new ProDesch()

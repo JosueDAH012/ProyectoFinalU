@@ -1,10 +1,4 @@
-const { Schema, model, mongoose } = require("mongoose");
-require("dotenv").config();
-const AutoIncrementFactory = require('mongoose-sequence');
-
-const connection = mongoose.createConnection(process.env.MONGODB_URI);
-
-const AutoIncrement = AutoIncrementFactory(connection);
+const { Schema, model } = require("mongoose");
 
 const paisesSchema = new Schema(
   {
@@ -19,11 +13,10 @@ const paisesSchema = new Schema(
     },
     fotobandera: {
       type: String,
-      required: true,
+      default: "https://res.cloudinary.com/mowglirealg/image/upload/v1651184134/paises/68863564516354197474526-128_chhxeb.png"
     }
   },
   { timestamps: true, versionKey: false }
 );
-paisesSchema.plugin(AutoIncrement, {inc_field: 'numeracion'});
 
 module.exports = model("paises", paisesSchema);

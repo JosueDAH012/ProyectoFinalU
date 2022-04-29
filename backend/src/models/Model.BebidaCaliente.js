@@ -5,6 +5,7 @@ const bebidacalienteSchema = new Schema(
     consecutivo: {
       type: String,
       required: true,
+      default: 'BC'
     },
     nombre: {
       type: String,
@@ -31,7 +32,7 @@ const bebidacalienteSchema = new Schema(
     },
     foto: {
       type: String,
-      required: true,
+      default: "https://res.cloudinary.com/mowglirealg/image/upload/v1651183075/bebidacaliente/9237367661579060834-128_r8nd1i.png",
     }
   },
   { timestamps: true, versionKey: false }

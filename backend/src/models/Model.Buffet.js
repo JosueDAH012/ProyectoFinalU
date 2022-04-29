@@ -4,7 +4,8 @@ const buffetSchema = new Schema(
   {
     consecutivo: {
       type: String,
-      required: true
+      required: true,
+      default: 'BUF'
     },
     nombre: {
       type: String,
@@ -26,7 +27,7 @@ const buffetSchema = new Schema(
     },
     foto: {
       type: String,
-      required: true,
+      default: "https://res.cloudinary.com/mowglirealg/image/upload/v1651183764/buffet/18910750351620395704-128_f5nu6a.png"
     },
   },
   { timestamps: true, versionKey: false }

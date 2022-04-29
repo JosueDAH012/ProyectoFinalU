@@ -7,122 +7,120 @@ const Buffet = require('../models/Model.Buffet');
 const key = process.env.KEY;
 const cipher = aes256.createCipher(key);
 
-bebiCaleCtrl.getBebiCales = (req, res) => {
-    const umedidas = [];
-    BebiCale.find((err, umedida) => {
-      if (err || !umedida) {
+buffetCtrl.getBuffets = (req, res) => {
+    const buffets = [];
+    Buffet.find((err, buffet) => {
+      if (err || !buffet) {
         return res.status(500).send({ message: "error en la base de datos" });
       }
-      console.log(umedida);
-      umedida.forEach((data) => {
-        const umedida = new BebiCale();
-        umedida._id = data._id;
-        umedida.consecutivo = data.consecutivo;
-        umedida.nombre = cipher.decrypt(data.nombre);
-        umedida.ingredientes = cipher.decrypt(data.ingredientes);
-        umedida.precio = cipher.decrypt(data.precio);
-        umedida.restaurante = cipher.decrypt(data.restaurante);
-        umedida.descripcion = cipher.decrypt(data.descripcion);
-        umedida.foto = data.foto;
-        umedidas.push(umedida);
+      console.log(buffet);
+      buffet.forEach((data) => {
+        const buffet = new Buffet();
+        buffet._id = data._id;
+        buffet.consecutivo = data.consecutivo;
+        buffet.nombre = cipher.decrypt(data.nombre);
+        buffet.precio = cipher.decrypt(data.precio);
+        buffet.tipo = cipher.decrypt(data.tipo);
+        buffet.unidaddemedida = cipher.decrypt(data.unidaddemedida);
+        buffet.foto = data.foto;
+        buffets.push(buffet);
       });
   
-      return res.status(200).send({ umedida: umedidas });
+      return res.status(200).send({ buffet: buffets });
     });
   };
 
-bebiCaleCtrl.createBebiCale = (req, res) => {
+buffetCtrl.createBuffet = (req, res) => {
   //const para encriptar
   const nombreencript = cipher.encrypt(req.body.nombre);
-  const ingredientesencript = cipher.encrypt(req.body.ingredientes);
   const precioencript = cipher.encrypt(req.body.precio);
-  const restauranteencript = cipher.encrypt(req.body.restaurante);
-  const descripcionencript = cipher.encrypt(req.body.descripcion);
+  const tipoencript = cipher.encrypt(req.body.tipo);
+  const unidaddemedidaencript = cipher.encrypt(req.body.unidaddemedida);
   //console.log(parametros unidad de medida);
-  const umedida = new BebiCale({
+  const buffet = new Buffet({
     consecutivo: consecutivo,
     nombre: nombreencript,
-    ingredientes: ingredientesencript, 
     precio: precioencript,
-    restaurante: restauranteencript,
-    descripcion: descripcionencript,
+    tipo: tipoencript, 
+    unidaddemedida: unidaddemedidaencript,
     foto: foto,
   });
-  umedida.save(function (error, umedida) {
+  buffet.save(function (error, buffet) {
     if (error) {
       return res.status(500).json({
         message: error,
       });
     }
-    return res.json(umedida);
+    return res.json(buffet);
     //res.json({message: 'Unidad de medida creado'})
   });
 };
 
-bebiCaleCtrl.getBebiCale = (req, res) => {
+buffetCtrl.getBuffet = (req, res) => {
     const { id } = req.params;
-    BebiCale
-    .findOne({id: id})
+    Buffet
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
-      const umedida = new BebiCale()
-      umedida._id = data._id;
-      umedida.consecutivo = data.consecutivo;
-      umedida.unidadmedida = cipher.decrypt(data.unidadmedida);
-      umedida.escala = cipher.decrypt(data.escala);
-      umedida.detalle = cipher.decrypt(data.detalle);
-      umedida.simbologia = cipher.decrypt(data.simbologia);
-      return res.status(200).send({umedida: umedida})
+      const buffet = new Buffet()
+      buffet._id = data._id;
+      buffet.consecutivo = data.consecutivo;
+      buffet.nombre = cipher.decrypt(data.nombre);
+      buffet.precio = cipher.decrypt(data.precio);
+      buffet.tipo = cipher.decrypt(data.tipo);
+      buffet.unidaddemedida = cipher.decrypt(data.unidaddemedida);
+      buffet.foto = data.foto;
+      return res.status(200).send({buffet: buffet})
     })
     .catch((error) => res.json({ message: error }));
 }
 
 //eliminar una unidad de medida
-bebiCaleCtrl.deleteBebiCale = (req, res) => {
+buffetCtrl.deleteBuffet = (req, res) => {
     const { id } = req.params;
-    BebiCale
+    Buffet
       .remove({ _id: id })
       .then((data) => res.json(data))
       .catch((error) => res.json({ message: error }));
   };
 
   //update una unidad de medida
-  bebiCaleCtrl.updateBebiCale = (req, res) => {
+  buffetCtrl.updateBuffet = (req, res) => {
     const { id } = req.params;
-    const {unidadmedida, escala, detalle, simbologia} = req.body;
-    const unidadmedidacrypt = cipher.encrypt(unidadmedida);
-    const escalacrypt = cipher.encrypt(escala);
-    const detallecrypt = cipher.encrypt(detalle);
-    const simbologiacrypt = cipher.encrypt(simbologia);
+    const {nombre, precio, tipo, unidaddemedida} = req.body;
+    const nombrecrypt = cipher.encrypt(nombre);
+    const preciocrypt = cipher.encrypt(precio);
+    const tipocrypt = cipher.encrypt(tipo);
+    const unidaddemedidacrypt = cipher.encrypt(unidaddemedida);
     //Validar si el email ya esta registrado
-    BebiCale.findOne({_id: id}, (err, data) => {
-      const unidaddemedidacrypt = cipher.decrypt(data.unidadmedida)
-      const umedida = {
-        unidadmedida: unidadmedidacrypt,
-        escala: escalacrypt,
-        detalle: detallecrypt,
-        simbologia: simbologiacrypt
+    Buffet.findOne({_id: id}, (err, data) => {
+      const nombreecrypt = cipher.decrypt(data.nombre)
+      const buffet = {
+        nombre: nombrecrypt,
+        precio: preciocrypt,
+        tipo: tipocrypt,
+        unidaddemedida: unidaddemedidacrypt
       };                                                                                             
       if(err){
           return res.status(500).send({
               message: 'Error al buscar coincidencia de email'
           });
       };
-      if(data && unidaddemedidacrypt.includes(unidadmedida)){
+      if(data && nombreecrypt.includes(nombre)){
           return res.status(200).send({
               message: 'La unidad de medida ya esta registrado'
           });
       }
       // Buscar y actualizar unidad de medida
-     BebiCale.findOneAndUpdate({_id: id}, umedida, {new:true}, (err, umedidaUpdated) => {
-        if(err || !umedidaUpdated){
+     Buffet.findOneAndUpdate({_id: id}, buffet, {new:true}, (err, buffetUpdated) => {
+        if(err || !buffetUpdated){
             return res.status(500).send({
                 message: 'Error al actualizar documento'
             })
         };
         return res.status(200).send({
             status: 'success',
-            user: umedidaUpdated
+            user: buffetUpdated
         }); 
       }); 
   

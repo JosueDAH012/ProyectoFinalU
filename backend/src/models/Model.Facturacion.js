@@ -5,6 +5,7 @@ const facturacionSchema = new Schema(
     consecutivo: {
       type: String,
       required: true,
+      default: 'FAC'
     },
     tipofecha: { 
       type: Date,

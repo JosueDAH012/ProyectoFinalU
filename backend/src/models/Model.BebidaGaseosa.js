@@ -5,6 +5,7 @@ const bebidagaseosaSchema = new Schema(
     consecutivo: {
       type: String,
       required: true,
+      default: 'BG'
     },
     nombre: {
       type: String,
@@ -26,7 +27,7 @@ const bebidagaseosaSchema = new Schema(
     },
     foto: {
       type: String,
-      required: true,
+      default: "https://res.cloudinary.com/mowglirealg/image/upload/v1651183144/bebidagaseosa/8728206751599230689-128_tl1l3z.png"
     },
     cantidad: {
       type: String,

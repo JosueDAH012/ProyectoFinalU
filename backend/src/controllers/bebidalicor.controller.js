@@ -7,87 +7,95 @@ const BebiLicor = require('../models/Model.BebidaLicor');
 const key = process.env.KEY;
 const cipher = aes256.createCipher(key);
 
-bebiCaleCtrl.getBebiCales = (req, res) => {
-    const umedidas = [];
-    BebiCale.find((err, umedida) => {
-      if (err || !umedida) {
+bebiLicorCtrl.getBebiLicors = (req, res) => {
+    const bebilicors = [];
+    BebiLicor.find((err, bebilicor) => {
+      if (err || !bebilicor) {
         return res.status(500).send({ message: "error en la base de datos" });
       }
-      console.log(umedida);
-      umedida.forEach((data) => {
-        const umedida = new BebiCale();
-        umedida._id = data._id;
-        umedida.consecutivo = data.consecutivo;
-        umedida.nombre = cipher.decrypt(data.nombre);
-        umedida.ingredientes = cipher.decrypt(data.ingredientes);
-        umedida.precio = cipher.decrypt(data.precio);
-        umedida.restaurante = cipher.decrypt(data.restaurante);
-        umedida.descripcion = cipher.decrypt(data.descripcion);
-        umedida.foto = data.foto;
-        umedidas.push(umedida);
+      console.log(bebilicor);
+      bebilicor.forEach((data) => {
+        const bebilicor = new BebiLicor();
+        bebilicor._id = data._id;
+        bebilicor.consecutivo = data.consecutivo;
+        bebilicor.nombre = cipher.decrypt(data.nombre);
+        bebilicor.restaurante = cipher.decrypt(data.restaurante);
+        bebilicor.descripcion = cipher.decrypt(data.descripcion);
+        bebilicor.foto = data.foto;
+        bebilicor.cantidad = cipher.decrypt(data.cantidad);
+        bebilicor.nacionalidad = cipher.decrypt(data.nacionalidad);
+        bebilicor.preciounitario = cipher.decrypt(data.preciounitario);
+        bebilicor.preciobotella = cipher.decrypt(data.preciobotella);
+        bebilicor.marca = cipher.decrypt(data.marca);
+        bebilicors.push(bebilicor);
       });
-  
-      return res.status(200).send({ umedida: umedidas });
+      return res.status(200).send({ bebilicor: bebilicors });
     });
   };
 
-bebiCaleCtrl.createBebiCale = (req, res) => {
+bebiLicorCtrl.createBebiLicor = (req, res) => {
   //const para encriptar
   const nombreencript = cipher.encrypt(req.body.nombre);
-  const ingredientesencript = cipher.encrypt(req.body.ingredientes);
-  const precioencript = cipher.encrypt(req.body.precio);
   const restauranteencript = cipher.encrypt(req.body.restaurante);
   const descripcionencript = cipher.encrypt(req.body.descripcion);
+  const cantidadencript = cipher.encrypt(req.body.cantidad);
+  const nacionalidadencript = cipher.encrypt(req.body.nacionalidad);
+  const preciounitarioencript = cipher.encrypt(req.body.preciounitario);
+  const preciobotellaencript = cipher.encrypt(req.body.preciobotella);
+  const marcaencript = cipher.encrypt(req.body.marca);
   //console.log(parametros unidad de medida);
-  const umedida = new BebiCale({
+  const bebilicor = new BebiLicor({
     consecutivo: consecutivo,
     nombre: nombreencript,
-    ingredientes: ingredientesencript, 
-    precio: precioencript,
     restaurante: restauranteencript,
     descripcion: descripcionencript,
     foto: foto,
+    cantidad: cantidadencript, 
+    nacionalidad: nacionalidadencript,
+    preciounitario: preciounitarioencript, 
+    preciobotella: preciobotellaencript,
+    marca: marcaencript
   });
-  umedida.save(function (error, umedida) {
+  bebilicor.save(function (error, bebilicor) {
     if (error) {
       return res.status(500).json({
         message: error,
       });
     }
-    return res.json(umedida);
+    return res.json(bebilicor);
     //res.json({message: 'Unidad de medida creado'})
   });
 };
 
-bebiCaleCtrl.getBebiCale = (req, res) => {
+bebiLicorCtrl.getBebiLicor = (req, res) => {
     const { id } = req.params;
-    BebiCale
-    .findOne({id: id})
+    BebiLicor
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
-      const umedida = new BebiCale()
-      umedida._id = data._id;
-      umedida.consecutivo = data.consecutivo;
-      umedida.unidadmedida = cipher.decrypt(data.unidadmedida);
-      umedida.escala = cipher.decrypt(data.escala);
-      umedida.detalle = cipher.decrypt(data.detalle);
-      umedida.simbologia = cipher.decrypt(data.simbologia);
-      return res.status(200).send({umedida: umedida})
+      const bebilicor = new BebiLicor()
+      bebilicor._id = data._id;
+      bebilicor.consecutivo = data.consecutivo;
+      bebilicor.unidadmedida = cipher.decrypt(data.unidadmedida);
+      bebilicor.escala = cipher.decrypt(data.escala);
+      bebilicor.detalle = cipher.decrypt(data.detalle);
+      bebilicor.simbologia = cipher.decrypt(data.simbologia);
+      return res.status(200).send({bebilicor: bebilicor})
     })
     .catch((error) => res.json({ message: error }));
 }
 
 //eliminar una unidad de medida
-bebiCaleCtrl.deleteBebiCale = (req, res) => {
+bebiLicorCtrl.deleteBebiLicor = (req, res) => {
     const { id } = req.params;
-    BebiCale
+    BebiLicor
       .remove({ _id: id })
       .then((data) => res.json(data))
       .catch((error) => res.json({ message: error }));
   };
 
   //update una unidad de medida
-  bebiCaleCtrl.updateBebiCale = (req, res) => {
+  bebiLicorCtrl.updateBebiLicor = (req, res) => {
     const { id } = req.params;
     const {unidadmedida, escala, detalle, simbologia} = req.body;
     const unidadmedidacrypt = cipher.encrypt(unidadmedida);
@@ -95,9 +103,9 @@ bebiCaleCtrl.deleteBebiCale = (req, res) => {
     const detallecrypt = cipher.encrypt(detalle);
     const simbologiacrypt = cipher.encrypt(simbologia);
     //Validar si el email ya esta registrado
-    BebiCale.findOne({_id: id}, (err, data) => {
+    BebiLicor.findOne({_id: id}, (err, data) => {
       const unidaddemedidacrypt = cipher.decrypt(data.unidadmedida)
-      const umedida = {
+      const bebilicor = {
         unidadmedida: unidadmedidacrypt,
         escala: escalacrypt,
         detalle: detallecrypt,
@@ -114,15 +122,15 @@ bebiCaleCtrl.deleteBebiCale = (req, res) => {
           });
       }
       // Buscar y actualizar unidad de medida
-     BebiCale.findOneAndUpdate({_id: id}, umedida, {new:true}, (err, umedidaUpdated) => {
-        if(err || !umedidaUpdated){
+     BebiLicor.findOneAndUpdate({_id: id}, bebilicor, {new:true}, (err, bebilicorUpdated) => {
+        if(err || !bebilicorUpdated){
             return res.status(500).send({
                 message: 'Error al actualizar documento'
             })
         };
         return res.status(200).send({
             status: 'success',
-            user: umedidaUpdated
+            user: bebilicorUpdated
         }); 
       }); 
   

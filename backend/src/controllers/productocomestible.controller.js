@@ -69,7 +69,7 @@ proComesCtrl.createProCome = (req, res) => {
 proComesCtrl.getProCome = (req, res) => {
     const { id } = req.params;
     ProComes
-    .findOne({id: id})
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
       const procomes = new ProComes()

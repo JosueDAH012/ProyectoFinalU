@@ -7,126 +7,80 @@ const Otros = require('../models/Model.Otros');
 const key = process.env.KEY;
 const cipher = aes256.createCipher(key);
 
-bebiCaleCtrl.getBebiCales = (req, res) => {
-    const umedidas = [];
-    BebiCale.find((err, umedida) => {
-      if (err || !umedida) {
+otrosCtrl.getOtross = (req, res) => {
+    const otross = [];
+    Otros.find((err, otros) => {
+      if (err || !otros) {
         return res.status(500).send({ message: "error en la base de datos" });
       }
-      console.log(umedida);
-      umedida.forEach((data) => {
-        const umedida = new BebiCale();
-        umedida._id = data._id;
-        umedida.consecutivo = data.consecutivo;
-        umedida.nombre = cipher.decrypt(data.nombre);
-        umedida.ingredientes = cipher.decrypt(data.ingredientes);
-        umedida.precio = cipher.decrypt(data.precio);
-        umedida.restaurante = cipher.decrypt(data.restaurante);
-        umedida.descripcion = cipher.decrypt(data.descripcion);
-        umedida.foto = data.foto;
-        umedidas.push(umedida);
+      console.log(otros);
+      otros.forEach((data) => {
+        const otros = new Otros();
+        otros._id = data._id;
+        otros.tipobuffet = cipher.decrypt(data.tipobuffet);
+        otros.tipofacturacion = cipher.decrypt(data.tipofacturacion);
+        otros.clasecomestible = cipher.decrypt(data.clasecomestible);
+        otros.lineacomestible = cipher.decrypt(data.lineacomestible);
+        otros.tipocomestible = cipher.decrypt(data.tipocomestible);
+        otross.push(otros);
       });
   
-      return res.status(200).send({ umedida: umedidas });
+      return res.status(200).send({ otros: otross });
     });
   };
 
-bebiCaleCtrl.createBebiCale = (req, res) => {
+otrosCtrl.createOtros = (req, res) => {
   //const para encriptar
-  const nombreencript = cipher.encrypt(req.body.nombre);
-  const ingredientesencript = cipher.encrypt(req.body.ingredientes);
-  const precioencript = cipher.encrypt(req.body.precio);
-  const restauranteencript = cipher.encrypt(req.body.restaurante);
-  const descripcionencript = cipher.encrypt(req.body.descripcion);
+  const tipobuffetencript = cipher.encrypt(req.body.tipobuffet);
+  const tipofacturacionencript = cipher.encrypt(req.body.tipofacturacion);
+  const clasecomestibleencript = cipher.encrypt(req.body.clasecomestible);
+  const lineacomestibleencript = cipher.encrypt(req.body.lineacomestible);
+  const tipocomestibleencript = cipher.encrypt(req.body.tipocomestible);
   //console.log(parametros unidad de medida);
-  const umedida = new BebiCale({
-    consecutivo: consecutivo,
-    nombre: nombreencript,
-    ingredientes: ingredientesencript, 
-    precio: precioencript,
-    restaurante: restauranteencript,
-    descripcion: descripcionencript,
-    foto: foto,
+  const otros = new Otros({
+    tipobuffet: tipobuffetencript,
+    tipofacturacion: tipofacturacionencript,
+    clasecomestible: clasecomestibleencript, 
+    lineacomestible: lineacomestibleencript,
+    tipocomestible: tipocomestibleencript,
   });
-  umedida.save(function (error, umedida) {
+  otros.save(function (error, otros) {
     if (error) {
       return res.status(500).json({
         message: error,
       });
     }
-    return res.json(umedida);
+    return res.json(otros);
     //res.json({message: 'Unidad de medida creado'})
   });
 };
 
-bebiCaleCtrl.getBebiCale = (req, res) => {
+otrosCtrl.getOtros = (req, res) => {
     const { id } = req.params;
-    BebiCale
-    .findOne({id: id})
+    Otros
+    .findOne({_id: id})
     .then((data) => {
       // console.log(data)
-      const umedida = new BebiCale()
-      umedida._id = data._id;
-      umedida.consecutivo = data.consecutivo;
-      umedida.unidadmedida = cipher.decrypt(data.unidadmedida);
-      umedida.escala = cipher.decrypt(data.escala);
-      umedida.detalle = cipher.decrypt(data.detalle);
-      umedida.simbologia = cipher.decrypt(data.simbologia);
-      return res.status(200).send({umedida: umedida})
+      const otros = new Otros()
+      otros._id = data._id;
+      otros.consecutivo = data.consecutivo;
+      otros.unidadmedida = cipher.decrypt(data.unidadmedida);
+      otros.escala = cipher.decrypt(data.escala);
+      otros.detalle = cipher.decrypt(data.detalle);
+      otros.simbologia = cipher.decrypt(data.simbologia);
+      return res.status(200).send({otros: otros})
     })
     .catch((error) => res.json({ message: error }));
 }
 
 //eliminar una unidad de medida
-bebiCaleCtrl.deleteBebiCale = (req, res) => {
+otrosCtrl.deleteOtros = (req, res) => {
     const { id } = req.params;
-    BebiCale
+    Otros
       .remove({ _id: id })
       .then((data) => res.json(data))
       .catch((error) => res.json({ message: error }));
   };
 
-  //update una unidad de medida
-  bebiCaleCtrl.updateBebiCale = (req, res) => {
-    const { id } = req.params;
-    const {unidadmedida, escala, detalle, simbologia} = req.body;
-    const unidadmedidacrypt = cipher.encrypt(unidadmedida);
-    const escalacrypt = cipher.encrypt(escala);
-    const detallecrypt = cipher.encrypt(detalle);
-    const simbologiacrypt = cipher.encrypt(simbologia);
-    //Validar si el email ya esta registrado
-    BebiCale.findOne({_id: id}, (err, data) => {
-      const unidaddemedidacrypt = cipher.decrypt(data.unidadmedida)
-      const umedida = {
-        unidadmedida: unidadmedidacrypt,
-        escala: escalacrypt,
-        detalle: detallecrypt,
-        simbologia: simbologiacrypt
-      };                                                                                             
-      if(err){
-          return res.status(500).send({
-              message: 'Error al buscar coincidencia de email'
-          });
-      };
-      if(data && unidaddemedidacrypt.includes(unidadmedida)){
-          return res.status(200).send({
-              message: 'La unidad de medida ya esta registrado'
-          });
-      }
-      // Buscar y actualizar unidad de medida
-     BebiCale.findOneAndUpdate({_id: id}, umedida, {new:true}, (err, umedidaUpdated) => {
-        if(err || !umedidaUpdated){
-            return res.status(500).send({
-                message: 'Error al actualizar documento'
-            })
-        };
-        return res.status(200).send({
-            status: 'success',
-            user: umedidaUpdated
-        }); 
-      }); 
-  
-  })
-  };
 
 module.exports = otrosCtrl;

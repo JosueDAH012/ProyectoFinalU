@@ -2,10 +2,6 @@ const { Schema, model } = require("mongoose");
 
 const cajaSchema = new Schema(
   {
-    consecutivo: {
-      type: String,
-      required: true
-    },
     fecha: {
       type: Date,
       required: true,
