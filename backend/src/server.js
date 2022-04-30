@@ -8,6 +8,8 @@ const fileUpload = require('express-fileupload')
 const cors = require('cors');
 const passport = require('passport')
 
+var indexRouter = require('./routes/Route.Usuario');
+
 const app = express()
 
 // AJUSTES DEL SERVER
@@ -69,7 +71,7 @@ app.use('/api/proveedores', require('./routes/Route.Proveedores'));
 app.use('/api/puestos', require('./routes/Route.Puestos'));
 app.use('/api/restaurante', require('./routes/Route.Restaurante'));
 app.use('/api/unidadmedida', require('./routes/Route.UnidadesMedida'));
-app.use('/user', require('./routes/Route.UnidadesMedida'))
+app.use('/api', indexRouter);
 
 
 module.exports = app;

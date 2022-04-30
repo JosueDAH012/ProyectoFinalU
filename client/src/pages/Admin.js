@@ -31,13 +31,12 @@ function Admin() {
                         <th scope="col">primerapellido</th>
                         <th scope="col">segundoapellido</th>
                         <th scope="col">numerotelefono</th>
-                        <th scope="col">avatar</th>
                       </tr>
                     </thead>
                     <tbody>
                       {
-                        profiles.profiles.map(({_id, user, celular, primerapellido, segundoapellido, numerotelefono, avatar})=>(
-                           <RowDetails _id={_id} user={user} celular={celular} primerapellido={primerapellido} segundoapellido={segundoapellido} numerotelefono={numerotelefono} avatar={avatar}/>
+                        profiles.profiles.map(({_id, user, celular, primerapellido, segundoapellido, numerotelefono})=>(
+                           <RowDetails _id={_id} user={user} celular={celular} primerapellido={primerapellido} segundoapellido={segundoapellido} numerotelefono={numerotelefono} />
                         ))
                       }
                       

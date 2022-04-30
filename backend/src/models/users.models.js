@@ -20,7 +20,6 @@ const usuarioSchema = new mongoose.Schema(
     },
     username: {
       type: String,
-      required: [true, "Por favor ingresar un nombre de usuario!"],
       trim: true,
       unique: true,
     },
@@ -28,7 +27,7 @@ const usuarioSchema = new mongoose.Schema(
       type: String,
       required: [true, "Por favor ingresar una contraseña!"],
     },
-    rol: {
+    role: {
       type: String,
     },
   },
